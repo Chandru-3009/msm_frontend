@@ -1,0 +1,23 @@
+[
+  {"id":"f1","partNumber":"0.008304FWR","type":"304-FWR","size":"0.0080 x 304","stock":57,"available":45,"forecastLbs":6700,"nextReorder":"2025-10-15","daysUntilStockout":12,"status":"Critical"},
+  {"id":"f2","partNumber":"2.500400RBHF","type":"Steel","size":"3.500 x 6.000","stock":82,"available":56,"forecastLbs":12200,"nextReorder":"2025-09-15","daysUntilStockout":45,"status":"Optimal"},
+  {"id":"f3","partNumber":"1.750400RBHF","type":"Nickel","size":"19.500 x 1.700","stock":45,"available":38,"forecastLbs":26500,"nextReorder":"2025-08-15","daysUntilStockout":22,"status":"Low"},
+  {"id":"f4","partNumber":"1.000400RBHF","type":"Titanium","size":"21.000 x 1.400","stock":29,"available":25,"forecastLbs":33100,"nextReorder":"2025-07-15","daysUntilStockout":37,"status":"Low"},
+  {"id":"f5","partNumber":"0.500200AL","type":"Aluminum","size":"0.500 x 2.000","stock":98,"available":73,"forecastLbs":15400,"nextReorder":"2025-11-10","daysUntilStockout":60,"status":"Optimal"},
+  {"id":"f6","partNumber":"0.750300SS","type":"Stainless Steel","size":"0.750 x 3.000","stock":41,"available":30,"forecastLbs":8200,"nextReorder":"2025-12-01","daysUntilStockout":10,"status":"Critical"},
+  {"id":"f7","partNumber":"2.250100CU","type":"Copper","size":"2.250 x 1.000","stock":66,"available":50,"forecastLbs":17200,"nextReorder":"2025-10-22","daysUntilStockout":28,"status":"Low"},
+  {"id":"f8","partNumber":"3.000250AL","type":"Aluminum","size":"3.000 x 2.500","stock":120,"available":100,"forecastLbs":45500,"nextReorder":"2025-11-30","daysUntilStockout":90,"status":"Optimal"},
+  {"id":"f9","partNumber":"0.375125MS","type":"Mild Steel","size":"0.375 x 1.250","stock":35,"available":22,"forecastLbs":5100,"nextReorder":"2025-09-28","daysUntilStockout":8,"status":"Critical"},
+  {"id":"f10","partNumber":"1.250600SS","type":"Stainless Steel","size":"1.250 x 6.000","stock":74,"available":60,"forecastLbs":21000,"nextReorder":"2025-12-12","daysUntilStockout":33,"status":"Low"},
+  {"id":"f11","partNumber":"0.625300TI","type":"Titanium","size":"0.625 x 3.000","stock":22,"available":18,"forecastLbs":9100,"nextReorder":"2025-10-05","daysUntilStockout":6,"status":"Critical"},
+  {"id":"f12","partNumber":"2.750900AL","type":"Aluminum","size":"2.750 x 9.000","stock":88,"available":70,"forecastLbs":26500,"nextReorder":"2025-11-08","daysUntilStockout":48,"status":"Optimal"},
+  {"id":"f13","partNumber":"1.125500NI","type":"Nickel","size":"1.125 x 5.000","stock":54,"available":42,"forecastLbs":13800,"nextReorder":"2025-10-18","daysUntilStockout":20,"status":"Low"},
+  {"id":"f14","partNumber":"0.250100CU","type":"Copper","size":"0.250 x 1.000","stock":19,"available":14,"forecastLbs":3200,"nextReorder":"2025-09-20","daysUntilStockout":5,"status":"Critical"},
+  {"id":"f15","partNumber":"3.500800MS","type":"Mild Steel","size":"3.500 x 8.000","stock":140,"available":120,"forecastLbs":56000,"nextReorder":"2025-12-28","daysUntilStockout":75,"status":"Optimal"},
+  {"id":"f16","partNumber":"0.875400SS","type":"Stainless Steel","size":"0.875 x 4.000","stock":63,"available":50,"forecastLbs":17600,"nextReorder":"2025-10-30","daysUntilStockout":26,"status":"Low"},
+  {"id":"f17","partNumber":"1.375250AL","type":"Aluminum","size":"1.375 x 2.500","stock":52,"available":40,"forecastLbs":11200,"nextReorder":"2025-11-18","daysUntilStockout":22,"status":"Low"},
+  {"id":"f18","partNumber":"0.438200MS","type":"Mild Steel","size":"0.438 x 2.000","stock":28,"available":18,"forecastLbs":4800,"nextReorder":"2025-10-03","daysUntilStockout":9,"status":"Critical"},
+  {"id":"f19","partNumber":"2.000650NI","type":"Nickel","size":"2.000 x 6.500","stock":77,"available":62,"forecastLbs":23500,"nextReorder":"2025-12-05","daysUntilStockout":41,"status":"Optimal"},
+  {"id":"f20","partNumber":"1.000300CU","type":"Copper","size":"1.000 x 3.000","stock":31,"available":24,"forecastLbs":7200,"nextReorder":"2025-10-12","daysUntilStockout":15,"status":"Low"}
+]
+

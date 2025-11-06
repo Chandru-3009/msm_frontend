@@ -1,0 +1,23 @@
+[
+  {"id":"i1","partNumber":"0.008304FWR","type":"304FWR","totalStock":82,"available":56,"allocated":28,"onOrderLbs":12125,"unitPrice":15,"totalValue":870000,"daysUntilStockout":12,"status":"Critical"},
+  {"id":"i2","partNumber":"0.008316FWR","type":"316FWR","totalStock":57,"available":45,"allocated":22,"onOrderLbs":6613,"unitPrice":18,"totalValue":748000,"daysUntilStockout":45,"status":"Optimal"},
+  {"id":"i3","partNumber":"1.750400RBHF","type":"Titanium","totalStock":29,"available":25,"allocated":13,"onOrderLbs":33069,"unitPrice":16,"totalValue":690000,"daysUntilStockout":22,"status":"Low"},
+  {"id":"i4","partNumber":"2.500400RBHF","type":"Steel","totalStock":98,"available":73,"allocated":30,"onOrderLbs":12200,"unitPrice":13,"totalValue":520000,"daysUntilStockout":60,"status":"Optimal"},
+  {"id":"i5","partNumber":"0.750300SS","type":"Stainless Steel","totalStock":41,"available":30,"allocated":11,"onOrderLbs":8200,"unitPrice":17,"totalValue":305000,"daysUntilStockout":10,"status":"Critical"},
+  {"id":"i6","partNumber":"2.250100CU","type":"Copper","totalStock":66,"available":50,"allocated":18,"onOrderLbs":17200,"unitPrice":9,"totalValue":220000,"daysUntilStockout":28,"status":"Low"},
+  {"id":"i7","partNumber":"3.000250AL","type":"Aluminum","totalStock":120,"available":100,"allocated":12,"onOrderLbs":45500,"unitPrice":7,"totalValue":315000,"daysUntilStockout":90,"status":"Optimal"},
+  {"id":"i8","partNumber":"0.375125MS","type":"Mild Steel","totalStock":35,"available":22,"allocated":9,"onOrderLbs":5100,"unitPrice":8,"totalValue":110000,"daysUntilStockout":8,"status":"Critical"},
+  {"id":"i9","partNumber":"1.250600SS","type":"Stainless Steel","totalStock":74,"available":60,"allocated":10,"onOrderLbs":21000,"unitPrice":12,"totalValue":410000,"daysUntilStockout":33,"status":"Low"},
+  {"id":"i10","partNumber":"0.625300TI","type":"Titanium","totalStock":22,"available":18,"allocated":6,"onOrderLbs":9100,"unitPrice":16,"totalValue":250000,"daysUntilStockout":6,"status":"Critical"},
+  {"id":"i11","partNumber":"2.750900AL","type":"Aluminum","totalStock":88,"available":70,"allocated":15,"onOrderLbs":26500,"unitPrice":7,"totalValue":180000,"daysUntilStockout":48,"status":"Optimal"},
+  {"id":"i12","partNumber":"1.125500NI","type":"Nickel","totalStock":54,"available":42,"allocated":12,"onOrderLbs":13800,"unitPrice":19,"totalValue":520000,"daysUntilStockout":20,"status":"Low"},
+  {"id":"i13","partNumber":"0.250100CU","type":"Copper","totalStock":19,"available":14,"allocated":6,"onOrderLbs":3200,"unitPrice":9,"totalValue":85000,"daysUntilStockout":5,"status":"Critical"},
+  {"id":"i14","partNumber":"3.500800MS","type":"Mild Steel","totalStock":140,"available":120,"allocated":15,"onOrderLbs":56000,"unitPrice":10,"totalValue":650000,"daysUntilStockout":75,"status":"Optimal"},
+  {"id":"i15","partNumber":"0.875400SS","type":"Stainless Steel","totalStock":63,"available":50,"allocated":9,"onOrderLbs":17600,"unitPrice":12,"totalValue":300000,"daysUntilStockout":26,"status":"Low"},
+  {"id":"i16","partNumber":"1.375250AL","type":"Aluminum","totalStock":52,"available":40,"allocated":10,"onOrderLbs":11200,"unitPrice":8,"totalValue":150000,"daysUntilStockout":22,"status":"Low"},
+  {"id":"i17","partNumber":"0.438200MS","type":"Mild Steel","totalStock":28,"available":18,"allocated":7,"onOrderLbs":4800,"unitPrice":9,"totalValue":90000,"daysUntilStockout":9,"status":"Critical"},
+  {"id":"i18","partNumber":"2.000650NI","type":"Nickel","totalStock":77,"available":62,"allocated":12,"onOrderLbs":23500,"unitPrice":20,"totalValue":590000,"daysUntilStockout":41,"status":"Optimal"},
+  {"id":"i19","partNumber":"1.000300CU","type":"Copper","totalStock":31,"available":24,"allocated":8,"onOrderLbs":7200,"unitPrice":9,"totalValue":110000,"daysUntilStockout":15,"status":"Low"},
+  {"id":"i20","partNumber":"0.500200AL","type":"Aluminum","totalStock":64,"available":50,"allocated":10,"onOrderLbs":15400,"unitPrice":7,"totalValue":210000,"daysUntilStockout":32,"status":"Optimal"}
+]
+
