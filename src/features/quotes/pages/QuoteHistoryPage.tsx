@@ -1,9 +1,10 @@
 import QuotesTable from '../components/QuotesTable'
+import PageHeader from '@/shared/components/Layout/PageHeader'
 
 export default function QuoteHistoryPage() {
   return (
     <div>
-      <h2 style={{ marginBottom: 12 }}>Quote History</h2>
+      <PageHeader title="Quote History" />
       <QuotesTable />
     </div>
   )

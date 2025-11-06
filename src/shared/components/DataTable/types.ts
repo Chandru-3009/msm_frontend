@@ -14,6 +14,8 @@ export type TableProps<T extends object> = {
   initialPageSize?: number
   pageSizeOptions?: number[]
   enableGlobalFilter?: boolean
+  searchPlaceholder?: string
+  toolbarRight?: React.ReactNode | ((state: TableChange) => React.ReactNode)
   manualMode?: boolean
   pageCount?: number
   onChange?: (s: TableChange) => void

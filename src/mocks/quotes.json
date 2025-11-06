@@ -1,0 +1,23 @@
+[
+  { "id": "q1", "date": "2025-10-15", "quoteNo": "5839274", "customer": "VMD Machine Co", "qty": 204, "price": 22.89, "status": "Active" },
+  { "id": "q2", "date": "2025-09-15", "quoteNo": "9284635", "customer": "XYZ Steel Mills", "qty": 40000, "price": 13, "status": "Ordered" },
+  { "id": "q3", "date": "2025-08-15", "quoteNo": "1759386", "customer": "DSA Steel Mills", "qty": 30000, "price": 15, "status": "Active" },
+  { "id": "q4", "date": "2025-07-15", "quoteNo": "2864910", "customer": "MSA Steels", "qty": 25000, "price": 12, "status": "Active" },
+  { "id": "q5", "date": "2025-06-15", "quoteNo": "7593164", "customer": "WER Steels", "qty": 20000, "price": 16, "status": "Ordered" },
+  { "id": "q6", "date": "2025-05-15", "quoteNo": "3645892", "customer": "TUY Steel Mills", "qty": 15000, "price": 11, "status": "Lost" },
+  { "id": "q7", "date": "2025-04-15", "quoteNo": "2825746", "customer": "GHK Steel Mills", "qty": 10000, "price": 10, "status": "Ordered" },
+  { "id": "q8", "date": "2025-11-15", "quoteNo": "4962053", "customer": "ABC Steel Mills", "qty": 28000, "price": 12, "status": "Won" },
+  { "id": "q9", "date": "2025-12-15", "quoteNo": "6309815", "customer": "QWE Metalworks", "qty": 26000, "price": 12, "status": "Won" },
+  { "id": "q10", "date": "2026-01-15", "quoteNo": "5074291", "customer": "JKL Steel Co.", "qty": 5000, "price": 15, "status": "Won" },
+  { "id": "q11", "date": "2026-02-15", "quoteNo": "9418037", "customer": "NOP Steel Solutions", "qty": 4000, "price": 17, "status": "Ordered" },
+  { "id": "q12", "date": "2026-03-15", "quoteNo": "1025984", "customer": "RST Alloys", "qty": 3000, "price": 14, "status": "Won" },
+  { "id": "q13", "date": "2025-04-15", "quoteNo": "2753098", "customer": "UVW Iron Foundry", "qty": 2500, "price": 15, "status": "Lost" },
+  { "id": "q14", "date": "2025-03-15", "quoteNo": "1764842", "customer": "XYZ Metal Industries", "qty": 2000, "price": 13, "status": "Won" },
+  { "id": "q15", "date": "2025-06-15", "quoteNo": "3987642", "customer": "EFG Steel Fabricators", "qty": 1500, "price": 11, "status": "Won" },
+  { "id": "q16", "date": "2025-07-15", "quoteNo": "8507341", "customer": "HJK Metallurgical", "qty": 1000, "price": 10, "status": "Received" },
+  { "id": "q17", "date": "2025-08-15", "quoteNo": "6915203", "customer": "LMN Steel Innovations", "qty": 800, "price": 18, "status": "Ordered" },
+  { "id": "q18", "date": "2025-09-15", "quoteNo": "9158203", "customer": "OPQ Alloy Technologies", "qty": 500, "price": 18, "status": "Won" },
+  { "id": "q19", "date": "2025-10-01", "quoteNo": "5839275", "customer": "Titanium Forge", "qty": 1200, "price": 20, "status": "Open" },
+  { "id": "q20", "date": "2025-10-05", "quoteNo": "5839276", "customer": "Venadium Corp", "qty": 1600, "price": 19, "status": "Open" }
+]
+

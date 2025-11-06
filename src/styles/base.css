@@ -8,7 +8,7 @@ body {
   color: var(--text);
   background: var(--bg);
 }
-.container { max-width: 1280px; margin: 0 auto; padding: 24px; }
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);

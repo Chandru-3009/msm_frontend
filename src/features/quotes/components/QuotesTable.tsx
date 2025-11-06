@@ -41,11 +41,12 @@ const columns: ColumnDef<QuoteRow>[] = [
 ]
 
 export default function QuotesTable() {
-  const { data = [], isLoading } = useQuery({ queryKey: ['quotes'], queryFn: fetchQuotes })
+  const { data, isLoading } = useQuery({ queryKey: ['quotes'], queryFn: fetchQuotes })
+  const rows = Array.isArray(data) ? data : []
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
   return (
     <div className="card" style={{ padding: 16 }}>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={rows} columns={columns} />
     </div>
   )
 }

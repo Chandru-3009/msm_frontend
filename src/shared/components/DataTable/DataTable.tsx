@@ -19,6 +19,8 @@ export default function DataTable<T extends object>({
   initialPageSize = 10,
   pageSizeOptions = [10, 25, 50],
   enableGlobalFilter = true,
+  searchPlaceholder = 'Search…',
+  toolbarRight,
   manualMode = false,
   pageCount,
   onChange,
@@ -62,17 +64,22 @@ export default function DataTable<T extends object>({
 
   return (
     <div>
-      {enableGlobalFilter && (
+      {(enableGlobalFilter || toolbarRight) && (
         <div className="toolbar-row">
-          <input
-            className="input"
-            placeholder="Search…"
-            value={globalFilter ?? ''}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            style={{ width: 260 }}
-          />
+          {enableGlobalFilter && (
+            <input
+              className="input"
+              placeholder={searchPlaceholder}
+              value={globalFilter ?? ''}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              style={{ width: 260 }}
+            />
+          )}
           <div className="spacer" />
-          <span className="small">Rows: {data.length}</span>
+          {typeof toolbarRight === 'function'
+            ? toolbarRight({ pageIndex, pageSize, sorting, globalFilter, columnFilters })
+            : toolbarRight}
+          <span className="small" style={{ marginLeft: 8 }}>Rows: {data.length}</span>
           <select
             className="select"
             value={pageSize}
@@ -101,7 +108,7 @@ export default function DataTable<T extends object>({
                         aria-sort={h.column.getIsSorted() ? (h.column.getIsSorted() === 'desc' ? 'descending' : 'ascending') : 'none'}
                       >
                         {flexRender(h.column.columnDef.header, h.getContext())}
-                        <SortIcon state={h.column.getIsSorted()} />
+                        
                       </span>
                     )}
                   </th>
@@ -148,10 +155,6 @@ export default function DataTable<T extends object>({
   )
 }
 
-function SortIcon({ state }: { state: false | 'asc' | 'desc' }) {
-  if (state === 'asc') return <span aria-hidden>▲</span>
-  if (state === 'desc') return <span aria-hidden>▼</span>
-  return <span aria-hidden style={{ opacity: .4 }}>⇅</span>
-}
+
 
 
