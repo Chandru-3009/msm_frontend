@@ -1,0 +1,23 @@
+[
+  {"id":"a1","dateTime":"2025-10-09T18:23:00Z","user":"Alex Johnson","actionType":"Sync","description":"Forecasting insights for nickel market trends.","durationMin":5,"status":"Success"},
+  {"id":"a2","dateTime":"2025-09-15T18:23:00Z","user":"Maria Smith","actionType":"Upload","description":"Comprehensive overview of all available products.","durationMin":7,"status":"Warning"},
+  {"id":"a3","dateTime":"2025-08-15T18:23:00Z","user":"David Brown","actionType":"Insight","description":"Analysis of stainless steel demand and supply.","durationMin":4,"status":"Failed"},
+  {"id":"a4","dateTime":"2025-07-15T18:23:00Z","user":"Emily Davis","actionType":"Upload","description":"Detailed report on carbon material specifications.","durationMin":6,"status":"Success"},
+  {"id":"a5","dateTime":"2025-10-01T18:23:00Z","user":"Michael Wilson","actionType":"Sync","description":"Inventory sync with Warehouse A.","durationMin":3,"status":"Success"},
+  {"id":"a6","dateTime":"2025-09-28T18:23:00Z","user":"Sarah Taylor","actionType":"Insight","description":"Supplier performance scorecard.","durationMin":8,"status":"Warning"},
+  {"id":"a7","dateTime":"2025-09-10T18:23:00Z","user":"Alex Johnson","actionType":"Upload","description":"Bulk item import.","durationMin":9,"status":"Success"},
+  {"id":"a8","dateTime":"2025-08-28T18:23:00Z","user":"Maria Smith","actionType":"Sync","description":"Sales order sync.","durationMin":2,"status":"Success"},
+  {"id":"a9","dateTime":"2025-08-20T18:23:00Z","user":"David Brown","actionType":"Insight","description":"Lead time variance analysis.","durationMin":6,"status":"Warning"},
+  {"id":"a10","dateTime":"2025-08-05T18:23:00Z","user":"Emily Davis","actionType":"Upload","description":"PO upload.","durationMin":5,"status":"Success"},
+  {"id":"a11","dateTime":"2025-07-30T18:23:00Z","user":"Michael Wilson","actionType":"Insight","description":"Purchase price trend dashboard.","durationMin":7,"status":"Success"},
+  {"id":"a12","dateTime":"2025-07-18T18:23:00Z","user":"Sarah Taylor","actionType":"Sync","description":"Quote history sync.","durationMin":3,"status":"Success"},
+  {"id":"a13","dateTime":"2025-07-01T18:23:00Z","user":"Alex Johnson","actionType":"Upload","description":"Manual inventory count upload.","durationMin":10,"status":"Warning"},
+  {"id":"a14","dateTime":"2025-06-25T18:23:00Z","user":"Maria Smith","actionType":"Insight","description":"Open order risk assessment.","durationMin":5,"status":"Failed"},
+  {"id":"a15","dateTime":"2025-06-12T18:23:00Z","user":"David Brown","actionType":"Upload","description":"Vendor terms update.","durationMin":4,"status":"Success"},
+  {"id":"a16","dateTime":"2025-06-02T18:23:00Z","user":"Emily Davis","actionType":"Sync","description":"Safety stock recalculation.","durationMin":3,"status":"Success"},
+  {"id":"a17","dateTime":"2025-05-20T18:23:00Z","user":"Michael Wilson","actionType":"Insight","description":"High-velocity items report.","durationMin":6,"status":"Success"},
+  {"id":"a18","dateTime":"2025-05-10T18:23:00Z","user":"Sarah Taylor","actionType":"Upload","description":"Customer master import.","durationMin":8,"status":"Warning"},
+  {"id":"a19","dateTime":"2025-04-28T18:23:00Z","user":"Alex Johnson","actionType":"Sync","description":"Pricing table sync.","durationMin":2,"status":"Success"},
+  {"id":"a20","dateTime":"2025-04-15T18:23:00Z","user":"Maria Smith","actionType":"Insight","description":"Capacity utilization analysis.","durationMin":7,"status":"Success"}
+]
+

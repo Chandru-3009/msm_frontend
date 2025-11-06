@@ -79,18 +79,7 @@ export default function DataTable<T extends object>({
           {typeof toolbarRight === 'function'
             ? toolbarRight({ pageIndex, pageSize, sorting, globalFilter, columnFilters })
             : toolbarRight}
-          <span className="small" style={{ marginLeft: 8 }}>Rows: {data.length}</span>
-          <select
-            className="select"
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {pageSizeOptions.map((s) => (
-              <option key={s} value={s}>
-                {s} / page
-              </option>
-            ))}
-          </select>
+         
         </div>
       )}
 

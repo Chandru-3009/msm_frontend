@@ -6,12 +6,12 @@ type Item = { label: string; to: string }
 
 export default function Sidebar({ logo }: { logo?: ReactNode }) {
   const items: Item[] = [
-    { label: 'Dashboard', to: '/' },
+    { label: 'Dashboard', to: '/dashboard' },
     { label: 'Forecast', to: '/forecast' },
     { label: 'Inventory Master', to: '/inventory' },
-    { label: 'Sales History', to: '/sales' },
-    { label: 'Purchase History', to: '/purchase' },
-    { label: 'Quote History', to: '/quotes' },
+    { label: 'Sales', to: '/sales' },
+    { label: 'Purchase', to: '/purchase' },
+    { label: 'Quotes', to: '/quotes' },
     { label: 'Data Upload', to: '/upload' },
     { label: 'Activity Logs', to: '/activity' },
     { label: 'User Management', to: '/users' },
