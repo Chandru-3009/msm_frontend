@@ -31,11 +31,12 @@ export default function ActivityTable() {
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
 
   const toolbarRight = (
-    <div style={{ display: 'flex', gap: 8 }}>
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
       <select className="select" value={status} onChange={(e) => setStatus(e.target.value)}>
         <option value="">All Status</option>
         {statuses.map((s) => <option key={s} value={s}>{s}</option>)}
       </select>
+      <button className="btn">Filters</button>
     </div>
   )
 

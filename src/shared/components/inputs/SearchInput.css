@@ -1,0 +1,5 @@
+.search-wrap { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; background: #fff; border: 1px solid var(--border); border-radius: 10px; }
+.search-input { border: none; outline: none; background: transparent; font-family: Inter, var(--font); font-weight: 500; font-size: 12px; line-height: 1; color: #717680; width: 240px; }
+.search-icon { width: 16px; height: 16px; opacity: .8; }
+.search-input::placeholder { color: #717680; }
+

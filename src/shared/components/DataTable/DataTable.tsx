@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import clsx from 'clsx'
+import SearchInput from '@/shared/components/inputs/SearchInput'
 
 type Props<T extends object> = import('./types').TableProps<T>
 
@@ -19,7 +20,7 @@ export default function DataTable<T extends object>({
   initialPageSize = 10,
   pageSizeOptions = [10, 25, 50],
   enableGlobalFilter = true,
-  searchPlaceholder = 'Search…',
+  searchPlaceholder,
   toolbarRight,
   manualMode = false,
   pageCount,
@@ -66,15 +67,8 @@ export default function DataTable<T extends object>({
     <div>
       {(enableGlobalFilter || toolbarRight) && (
         <div className="toolbar-row">
-          {enableGlobalFilter && (
-            <input
-              className="input"
-              placeholder={searchPlaceholder}
-              value={globalFilter ?? ''}
-              onChange={(e) => setGlobalFilter(e.target.value)}
-              style={{ width: 260 }}
-            />
-          )}
+                <SearchInput value={globalFilter ?? ''} onChange={(v) => setGlobalFilter(v)} placeholder={searchPlaceholder} />
+          
           <div className="spacer" />
           {typeof toolbarRight === 'function'
             ? toolbarRight({ pageIndex, pageSize, sorting, globalFilter, columnFilters })

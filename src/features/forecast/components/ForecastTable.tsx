@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query'
 import { ForecastRow } from '../types'
 import { fetchForecast } from '../api'
 import { useMemo, useState } from 'react'
+import Filters, { FiltersValue, DaysOption } from '@/shared/components/Filters/Filters'
+import downloadIcon from '@/assets/icons/download_icon.svg'
 
 const columns: ColumnDef<ForecastRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
@@ -36,24 +38,50 @@ export default function ForecastTable() {
   const { data, isLoading } = useQuery({ queryKey: ['forecast'], queryFn: fetchForecast })
   const rows = Array.isArray(data) ? data : []
 
-  const [status, setStatus] = useState<string>('')
-
+  const typeOptions = useMemo(() => Array.from(new Set(rows.map((d) => d.type))).sort(), [rows])
   const statuses = useMemo(() => Array.from(new Set(rows.map((d) => d.status))), [rows])
 
+  const daysOptions: DaysOption[] = useMemo(() => [
+    { key: '7', label: '7 Days', days: 7 },
+    { key: '14', label: '14 Days', days: 14 },
+    { key: '30', label: '30 Days', days: 30 },
+    { key: '60', label: '60 Days', days: 60 },
+  ], [])
+
+  const [filters, setFilters] = useState<FiltersValue>({ types: [] })
+  const [status, setStatus] = useState<string>('')
+
   const filtered = useMemo(() => {
-    return rows.filter((r) => (status ? r.status === status : true))
-  }, [rows, status])
+    return rows.filter((r) => {
+      if (status && r.status !== status) return false
+      if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
+      if (filters.daysKey) {
+        const opt = daysOptions.find((d) => d.key === filters.daysKey)
+        if (opt && !(r.daysUntilStockout <= opt.days)) return false
+      }
+      return true
+    })
+  }, [rows, status, filters, daysOptions])
 
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
 
   const toolbarRight = (
-    <div style={{ display: 'flex', gap: 8 }}>
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+      <Filters
+        typeOptions={typeOptions}
+        daysOptions={daysOptions}
+        value={filters}
+        onChange={setFilters}
+      />
       <select className="select" value={status} onChange={(e) => setStatus(e.target.value)}>
         <option value="">All Status</option>
         {statuses.map((s) => (
           <option key={s} value={s}>{s}</option>
         ))}
       </select>
+      <button className="btn" title="Download">
+        <img src={downloadIcon} alt="" width={16} height={16} />
+      </button>
     </div>
   )
 
