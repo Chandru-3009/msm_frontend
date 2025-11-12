@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { InventoryRow } from '../types'
 import { fetchInventory } from '../api'
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Filters, { FiltersValue, ValueRangeOption, DaysOption } from '@/shared/components/Filters/Filters'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 
@@ -44,6 +45,7 @@ const columns: ColumnDef<InventoryRow>[] = [
 export default function InventoryTable() {
   const { data, isLoading } = useQuery({ queryKey: ['inventory'], queryFn: fetchInventory })
   const rows = Array.isArray(data) ? data : []
+  const navigate = useNavigate()
 
   const typeOptions = useMemo(() => Array.from(new Set(rows.map((d) => d.type))).sort(), [rows])
   const statuses = useMemo(() => Array.from(new Set(rows.map((d) => d.status))), [rows])
@@ -109,7 +111,12 @@ export default function InventoryTable() {
 
   return (
     <div className="card" style={{ padding: 16 }}>
-      <DataTable data={filtered} columns={columns} toolbarRight={toolbarRight} />
+      <DataTable
+        data={filtered}
+        columns={columns}
+        toolbarRight={toolbarRight}
+        onRowClick={(row) => navigate(`/inventory/${(row as InventoryRow).id}`)}
+      />
     </div>
   )
 }

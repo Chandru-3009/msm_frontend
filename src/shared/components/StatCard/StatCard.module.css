@@ -1,0 +1,57 @@
+ .container {
+   background: #ffffff;
+   border-radius: 12px;
+   box-shadow: 0px 4px 15px 0px #00000012;
+   padding: 16px;
+ }
+ 
+ .titleRow {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 8px;
+ }
+ 
+ .title {
+   font-family: var(--font);
+   font-weight: 500;
+   font-size: 12px;
+   line-height: 1;
+   color: #555555;
+ }
+ 
+ .icon {
+   width: 20px;
+   height: 20px;
+ }
+ 
+ .value {
+   font-family: var(--font);
+   font-weight: 600;
+   font-size: 20px;
+   line-height: 28px;
+   color: #181D27;
+   margin-bottom: 10px;
+ }
+ 
+ .action {
+   font-family: var(--font);
+   font-weight: 600;
+   font-size: 11px;
+   line-height: 1;
+   color: var(--primary);
+   text-decoration: none;
+    cursor: text;
+ }
+ 
+ .actionButton {
+   all: unset;
+    cursor: text;
+   font-family: var(--font);
+   font-weight: 600;
+   font-size: 11px;
+   line-height: 1;
+   color: var(--primary);
+ }
+ 
+

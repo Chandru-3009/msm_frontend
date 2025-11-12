@@ -1,0 +1,37 @@
+/* Tabs wrapper */
+.tabs-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #D2DDE480;
+  box-shadow: 0px 4px 15px 0px #0000000F;
+  border-radius: 10px;
+}
+
+/* Individual tab */
+.tab {
+  padding: 8px 10px;
+  border-radius: 4px;
+  color: #666666;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color .15s ease, background .15s ease, box-shadow .15s ease;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: #36454F;
+}
+
+/* Active tab gradient + white text */
+.tab-active {
+  color: #FFFFFF !important;
+  background:
+    linear-gradient(0deg, #004974, #004974),
+    linear-gradient(180deg, #004974 0%, #003D61 100%);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+

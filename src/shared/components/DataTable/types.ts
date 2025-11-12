@@ -19,6 +19,7 @@ export type TableProps<T extends object> = {
   manualMode?: boolean
   pageCount?: number
   onChange?: (s: TableChange) => void
+  onRowClick?: (row: T) => void
 }
 
 

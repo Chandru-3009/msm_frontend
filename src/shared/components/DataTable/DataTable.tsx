@@ -25,6 +25,7 @@ export default function DataTable<T extends object>({
   manualMode = false,
   pageCount,
   onChange,
+  onRowClick,
 }: Props<T>) {
   const [globalFilter, setGlobalFilter] = useState('')
   const [sorting, setSorting] = useState<any>([])
@@ -101,7 +102,12 @@ export default function DataTable<T extends object>({
           </thead>
           <tbody>
             {table.getRowModel().rows.map((r) => (
-              <tr key={r.id} className="tr">
+              <tr
+                key={r.id}
+                className="tr"
+                onClick={onRowClick ? () => onRowClick(r.original as T) : undefined}
+                style={onRowClick ? { cursor: 'pointer' } : undefined}
+              >
                 {r.getVisibleCells().map((c) => (
                   <td key={c.id} className={clsx(((c.column.columnDef as any).meta?.align) === 'right' && 'cell-right')}>
                     {flexRender(c.column.columnDef.cell, c.getContext())}
