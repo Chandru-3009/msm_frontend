@@ -1,0 +1,40 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: var(--sb-bg, rgba(25, 126, 72, 0.08));
+  border: 0;
+  transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+/* radius controls */
+.rSm { border-radius: 8px; }
+.rMd { border-radius: 10px; }
+.rLg { border-radius: 12px; }
+.rFull { border-radius: 9999px; }
+
+/* icon */
+.icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 0;
+  color: var(--sb-fg, #197E48);
+}
+
+/* variants set fg/bg via CSS vars */
+.success {
+  --sb-fg: #197E48;               /* green text */
+  --sb-bg: rgba(25, 126, 72, 0.12);
+}
+.active {
+  --sb-fg: #2563EB;               /* blue */
+  --sb-bg: rgba(37, 99, 235, 0.12);
+}
+.critical {
+  --sb-fg: #D92D20;               /* red */
+  --sb-bg: rgba(217, 45, 32, 0.12);
+}
+
+

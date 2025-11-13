@@ -1,0 +1,28 @@
+{
+  "summary": {
+    "orderId": "o60541",
+    "orderNumber": "60541",
+    "status": "Delivered",
+    "date": "Oct 15, 2025",
+    "customerOrder": "S11058",
+    "leadTimeDays": 12,
+    "customerName": "ABC Steel",
+    "salesPerson": "Sarah Wieczorek",
+    "shipVia": "Ground",
+    "paymentTerms": "Net 30",
+    "vendor": "Carpenter Technology",
+    "fob": "Delivered",
+    "freightCostUsd": 0,
+    "expectedDelivery": "Oct 15, 2025",
+    "totalItems": 13,
+    "totalQuantityLbs": 240500,
+    "totalValueUsd": 870000
+  },
+  "items": [
+    { "id": "i1", "partNumber": "2.500400RBFH", "type": "Aluminum", "size": "5.500\" x 1.200\"", "qtyLbs": 50000, "pricePerLb": 16.25, "subtotalUsd": 812500, "lot": "N", "deliveryDate": "Oct 15, 2025" },
+    { "id": "i2", "partNumber": "2.500400RBFH", "type": "Steel", "size": "3.500\" x 0.600\"", "qtyLbs": 4000, "pricePerLb": 12.25, "subtotalUsd": 49000, "lot": "E", "deliveryDate": "Sep 15, 2025" },
+    { "id": "i3", "partNumber": "1.750400RBFH", "type": "Nickel", "size": "19.500\" x 1.700\"", "qtyLbs": 41000, "pricePerLb": 14.59, "subtotalUsd": 59800, "lot": "B", "deliveryDate": "Jul 15, 2025" }
+  ]
+}
+
+

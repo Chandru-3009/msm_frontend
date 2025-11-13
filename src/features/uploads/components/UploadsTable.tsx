@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { UploadRow } from '../types'
 import { fetchUploads } from '../api'
 import { useMemo, useState } from 'react'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const columns: ColumnDef<UploadRow>[] = [
   { accessorKey: 'date', header: 'Date', cell: (c) => {
@@ -13,11 +14,11 @@ const columns: ColumnDef<UploadRow>[] = [
   { accessorKey: 'user', header: 'User' },
   { accessorKey: 'type', header: 'Type' },
   { accessorKey: 'fileName', header: 'File Name', cell: (c) => <a href="#">{c.getValue<string>()}</a> },
-  { accessorKey: 'records', header: 'Records', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'records', header: 'Records',cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'status', header: 'Status', cell: (c) => <span className="badge">{c.getValue<string | undefined>() ?? '-'}</span> },
+  { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
   { id: 'action', header: 'Action', cell: () => <a href="#" className="small">Download</a> },
 ]
 

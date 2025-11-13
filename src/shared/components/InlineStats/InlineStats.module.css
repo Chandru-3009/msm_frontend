@@ -1,0 +1,36 @@
+ .wrap {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   color: #64748b;
+   font-size: 12px;
+   white-space: nowrap;
+ }
+ 
+ .prefix {
+   color: #334155;
+ }
+ 
+ .segments {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+ }
+ 
+ .seg {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+   color: #0f172a;
+   font-weight: 600;
+ }
+ 
+ .up { color: #16a34a; }
+ .down { color: #dc2626; }
+ .neutral { color: #64748b; }
+ 
+ .pipe {
+   color: #94a3b8;
+ }
+ 
+

@@ -5,6 +5,7 @@ import { fetchPurchases } from '../api'
 import { PurchaseRow } from '../types'
 import { useMemo, useState } from 'react'
 import DateRangeButton from '@/shared/components/DateRange/DateRangeButton'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const columns: ColumnDef<PurchaseRow>[] = [
   { accessorKey: 'date', header: 'Date', cell: (c) => {
@@ -14,11 +15,11 @@ const columns: ColumnDef<PurchaseRow>[] = [
   { accessorKey: 'po', header: 'PO#' },
   { accessorKey: 'vendor', header: 'Vendor' },
   { accessorKey: 'customerPo', header: 'Customer PO' },
-  { accessorKey: 'items', header: 'Items', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'items', header: 'Items',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'weightLbs', header: 'Weight', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'weightLbs', header: 'Weight',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v.toLocaleString()} lbs`
   } },
@@ -26,7 +27,7 @@ const columns: ColumnDef<PurchaseRow>[] = [
     const v = c.getValue<string | undefined>()
     return v ? new Date(v).toLocaleDateString() : '-'
   } },
-  { accessorKey: 'status', header: 'Status', cell: (c) => <span className="badge">{c.getValue<string | undefined>() ?? '-'}</span> },
+  { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
 ]
 
 export default function PurchaseTable() {

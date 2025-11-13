@@ -1,4 +1,4 @@
-import { http } from '@/shared/api/http'
+import { ApiClient } from '@/shared/api/http'
 import { API_URL, USE_MOCKS } from '@/shared/lib/env'
 import { SalesRow } from './types'
 import salesMock from '@/mocks/sales.json'
@@ -8,7 +8,7 @@ export async function fetchSales(): Promise<SalesRow[]> {
     return salesMock as SalesRow[]
   }
   try {
-    const { data } = await http.get<SalesRow[]>('/sales')
+    const { data } = await ApiClient.get<SalesRow[]>('/sales')
     return Array.isArray(data) ? data : []
   } catch {
     return salesMock as SalesRow[]

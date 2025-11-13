@@ -1,0 +1,45 @@
+ .container {
+   padding: 12px;
+ }
+ 
+ .headerRow {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   margin-bottom: 10px;
+ }
+ .statsRow {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 8px;
+   margin-bottom: 10px;
+ }
+ .title {
+   margin: 0;
+ }
+ 
+ .status {
+   margin-left: 8px;
+ }
+ 
+ .spacer12 {
+   height: 12px;
+ }
+
+  .spacer {
+    flex: 1;
+  }
+ 
+ .pad16 {
+   padding: 16px;
+}
+ 
+
+  .notices {
+    display: grid;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+ 

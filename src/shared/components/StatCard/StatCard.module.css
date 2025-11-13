@@ -33,6 +33,27 @@
    color: #181D27;
    margin-bottom: 10px;
  }
+
+  .subtext {
+    display: block;
+    font-family: var(--font);
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .muted {
+    color: #6b7280;
+  }
+
+  .link {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .danger {
+    color: #ef4444;
+    font-weight: 600;
+  }
  
  .action {
    font-family: var(--font);

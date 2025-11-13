@@ -1,4 +1,4 @@
-import { http } from '@/shared/api/http'
+import { ApiClient } from '@/shared/api/http'
 import { API_URL, USE_MOCKS } from '@/shared/lib/env'
 import { InventoryRow } from './types'
 import inventoryMock from '@/mocks/inventory.json'
@@ -9,7 +9,7 @@ export async function fetchInventory(): Promise<InventoryRow[]> {
     return inventoryMock as InventoryRow[]
   }
   try {
-    const { data } = await http.get<InventoryRow[]>('/inventory')
+    const { data } = await ApiClient.get<InventoryRow[]>('/inventory')
     return Array.isArray(data) ? data : []
   } catch {
     return inventoryMock as InventoryRow[]
@@ -18,7 +18,7 @@ export async function fetchInventory(): Promise<InventoryRow[]> {
 
 export async function fetchInventoryDetail(id: string): Promise<InventoryDetail> {
   try {
-    const { data } = await http.get<InventoryDetail>(`/inventory/${id}`)
+    const { data } = await ApiClient.get<InventoryDetail>(`/inventory/${id}`)
     if (data?.id) return data
     throw new Error('bad data')
   } catch {

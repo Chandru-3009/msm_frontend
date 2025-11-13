@@ -6,20 +6,21 @@ import { fetchForecast } from '../api'
 import { useMemo, useState } from 'react'
 import Filters, { FiltersValue, DaysOption } from '@/shared/components/Filters/Filters'
 import downloadIcon from '@/assets/icons/download_icon.svg'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const columns: ColumnDef<ForecastRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
   { accessorKey: 'type', header: 'Type' },
   { accessorKey: 'size', header: 'Size' },
-  { accessorKey: 'stock', header: 'Stock', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'stock', header: 'Stock',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'available', header: 'Available', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'available', header: 'Available',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'forecastLbs', header: '30-Day Forecast', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'forecastLbs', header: '30-Day Forecast',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v.toLocaleString()} lbs`
   } },
@@ -27,11 +28,11 @@ const columns: ColumnDef<ForecastRow>[] = [
     const v = c.getValue<string | undefined>()
     return v ? new Date(v).toLocaleDateString() : '-'
   } },
-  { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v} days`
   } },
-  { accessorKey: 'status', header: 'Status', cell: (c) => <span className="badge">{c.getValue<string | undefined>() ?? '-'}</span> },
+  { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
 ]
 
 export default function ForecastTable() {

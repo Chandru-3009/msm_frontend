@@ -6,40 +6,41 @@ import { fetchInventory } from '../api'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Filters, { FiltersValue, ValueRangeOption, DaysOption } from '@/shared/components/Filters/Filters'
+import StatusBadge from '@/shared/components/StatusBadge'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 
 const columns: ColumnDef<InventoryRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
   { accessorKey: 'type', header: 'Type' },
-  { accessorKey: 'totalStock', header: 'Total Stock', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'totalStock', header: 'Total Stock',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'available', header: 'Available', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'available', header: 'Available',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'allocated', header: 'Allocated', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'allocated', header: 'Allocated',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'onOrderLbs', header: 'On Order', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'onOrderLbs', header: 'On Order',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v.toLocaleString()} lbs`
   } },
-  { accessorKey: 'unitPrice', header: 'Unit Price', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'unitPrice', header: 'Unit Price',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `$${v.toLocaleString()}`
   } },
-  { accessorKey: 'totalValue', header: 'Total Value', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'totalValue', header: 'Total Value',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `$${v.toLocaleString()}`
   } },
-  { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v} days`
   } },
-  { accessorKey: 'status', header: 'Status', cell: (c) => <span className="badge">{c.getValue<string | undefined>() ?? '-'}</span> },
+  { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
 ]
 
 export default function InventoryTable() {

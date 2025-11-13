@@ -5,6 +5,7 @@ import AppLayout from './AppLayout'
 export default function ProtectedLayout() {
   // const isAuthenticated = useAuthStore(s => s.isAuthenticated)
   // const otpVerified = useAuthStore(s => s.otpVerified)
+  // const isAuthenticated = useAuthStore(s => s.isAuthenticated)
 
   // if (!isAuthenticated) return <Navigate to="/auth/login" replace />
   // if (!otpVerified) return <Navigate to="/auth/verify" replace />

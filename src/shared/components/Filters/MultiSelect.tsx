@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-
+import downArrowIcon from '../../../assets/icons/back_icon.svg'
+import styles from './MultiSelect.module.css'
 type Props = {
   options: string[]
   value: string[]
@@ -26,9 +27,9 @@ export default function MultiSelect({ options, value, onChange, placeholder = 'S
   }
 
   return (
-    <div ref={rootRef} className="ms" onClick={() => setOpen((o) => !o)}>
-      <div className="ms-value">
-        {value.length === 0 && <span className="ms-placeholder">{placeholder}</span>}
+    <div ref={rootRef} className={styles.ms} onClick={() => setOpen((o) => !o)}>
+      <div className={styles.msValue}>
+        {value.length === 0 && <span className={styles.msPlaceholder}>{placeholder}</span>}
         {value.map((v) => (
           <span key={v} className="chip" onClick={(e) => e.stopPropagation()}>
             {v}
@@ -36,19 +37,19 @@ export default function MultiSelect({ options, value, onChange, placeholder = 'S
           </span>
         ))}
       </div>
-      <span className="ms-caret">▾</span>
+      <span className={styles.msCaret}><img src={downArrowIcon} alt="down arrow" /></span>
 
       {open && (
-        <div className="ms-menu card" onClick={(e) => e.stopPropagation()}>
+        <div className={`${styles.msMenu} card`} onClick={(e) => e.stopPropagation()}>
           {options.map((opt) => {
             const selected = value.includes(opt)
             return (
               <div
                 key={opt}
-                className={`ms-option ${selected ? 'ms-option-selected' : ''}`}
+                className={`${styles.msOption} ${selected ? styles.msOptionSelected : ''}`}
                 onClick={() => toggleOption(opt)}
               >
-                <span className="ms-check">{selected ? '✓' : ''}</span>
+                <span className={styles.msCheck}>{selected ? '✓' : ''}</span>
                 <span>{opt}</span>
               </div>
             )

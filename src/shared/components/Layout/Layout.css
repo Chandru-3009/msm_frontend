@@ -1,14 +1,7 @@
 .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-.sidebar { background: #0b1730; color: #e5e7eb; display: flex; flex-direction: column; }
-.sidebar-header { height: 60px; display: flex; align-items: center; padding: 0 16px; font-weight: 700; letter-spacing: .5px; }
-.sidebar-nav { padding: 8px; display: flex; flex-direction: column; gap: 4px; }
-.sidebar-link { padding: 10px 12px; border-radius: 6px; color: #c7d2fe; text-decoration: none; display: block; }
-.sidebar-link:hover { background: rgba(255,255,255,.08); }
-.sidebar-link.active { background: #233763; color: #fff; }
-.sidebar-footer { margin-top: auto; padding: 12px; font-size: 12px; color: #93a3c7; }
-.content { background: var(--bg); }
-.content-inner { padding: 24px; }
+.content { background: var(--bg); height: 100vh; }
+.content-inner { padding: 24px; height: 100vh; overflow-y: auto; }
 .page-header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-.page-title { font-size: 20px; font-weight: 700; color: #0f172a; }
-.page-subtitle { font-size: 12px; color: var(--muted); }
+.page-title { font-size: 18px; font-weight: 600; color: #305875; vertical-align: middle; display: inline-flex; align-items: center; }
+.page-subtitle { font-size: 14px; font-weight: 500; color: #677278; }
 

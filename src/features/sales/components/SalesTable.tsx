@@ -6,6 +6,12 @@ import { fetchSales } from '../api'
 import { useMemo, useState } from 'react'
 import DateRangeButton from '@/shared/components/DateRange/DateRangeButton'
 import downloadIcon from '@/assets/icons/download_icon.svg'
+import StatCard from '@/shared/components/StatCard'
+import stockIcon from '@/assets/icons/stock_icon.svg'
+import cartIcon from '@/assets/icons/cart_icon.svg'
+import calendarIcon from '@/assets/icons/calendar_icon.svg'
+import clockIcon from '@/assets/icons/clock_icon.svg'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const columns: ColumnDef<SalesRow>[] = [
   { accessorKey: 'date', header: 'Date', cell: (c) => {
@@ -15,19 +21,19 @@ const columns: ColumnDef<SalesRow>[] = [
   { accessorKey: 'orderNo', header: 'Order #' },
   { accessorKey: 'customer', header: 'Customer' },
   { accessorKey: 'poNumber', header: 'PO Number' },
-  { accessorKey: 'items', header: 'Items', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'items', header: 'Items',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'qtyLbs', header: 'Qty', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'qtyLbs', header: 'Qty',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v.toLocaleString()} lbs`
   } },
-  { accessorKey: 'orderValue', header: 'Order Value', meta: { align: 'right' as const }, cell: (c) => {
+  { accessorKey: 'orderValue', header: 'Order Value',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `$${v.toLocaleString()}`
   } },
-  { accessorKey: 'deliveryStatus', header: 'Delivery Status', cell: (c) => <span className="badge">{c.getValue<string | undefined>() ?? '-'}</span> },
+  { accessorKey: 'deliveryStatus', header: 'Delivery Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
 ]
 
 export default function SalesTable() {
@@ -67,9 +73,44 @@ export default function SalesTable() {
   )
 
   return (
+    <>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 12 }}>
+    <StatCard
+        title="Total Stock"
+        value={`lbs`}
+        iconSrc={stockIcon}
+        type="stock"
+        linkText="All Products"
+      />
+      <StatCard
+        title="Open customer Orders"
+        value={`lbs`}
+        iconSrc={cartIcon}
+        type="customer"
+        metaDate="Oct 7, 2025"
+      />
+     
+      <StatCard
+        title="Stock out"
+        value={`0.9 mo`}
+        iconSrc={clockIcon}
+        type="stockout"
+      />
+
+      <StatCard
+        title="Open vendor Orders"
+        value={`lbs`}
+        iconSrc={cartIcon}
+        type="vendor"
+        metaDate="Nov 28, 2025"
+      />
+    </div>
     <div className="card" style={{ padding: 16 }}>
+     
+
       <DataTable data={filtered} columns={columns} toolbarRight={toolbarRight} />
     </div>
+    </>
   )
 }
 

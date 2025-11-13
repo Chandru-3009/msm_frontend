@@ -1,6 +1,8 @@
 import './Filters.css'
 import { useEffect, useMemo, useState } from 'react'
 import MultiSelect from './MultiSelect'
+import Select from '@/shared/components/Select/Select'
+import Button from '@/shared/components/Button'
 
 export type ValueRangeOption = { key: string; label: string; min?: number; max?: number }
 export type DaysOption = { key: string; label: string; days: number }
@@ -29,8 +31,12 @@ export default function Filters({ typeOptions, valueRanges, daysOptions, value, 
 
   const chips = useMemo(() => {
     const results: { key: string; label: string }[] = []
-    // Outside chips reflect applied value with separate chips per type
-    value.types.forEach((t) => results.push({ key: `type:${t}`, label: t }))
+    // Outside chips: show a single summary chip when multiple types are selected
+    if (value.types.length > 1) {
+      results.push({ key: 'types', label: `${value.types.length} selected` })
+    } else {
+      value.types.forEach((t) => results.push({ key: `type:${t}`, label: t }))
+    }
     if (value.valueRangeKey && valueRanges) {
       const opt = valueRanges.find((v) => v.key === value.valueRangeKey)
       if (opt) results.push({ key: `vr:${opt.key}`, label: opt.label })
@@ -44,6 +50,7 @@ export default function Filters({ typeOptions, valueRanges, daysOptions, value, 
 
   const removeChip = (chipKey: string) => {
     const [kind, id] = chipKey.split(':')
+    if (chipKey === 'types') onChange({ ...value, types: [] })
     if (kind === 'type') onChange({ ...value, types: value.types.filter((t) => t !== id) })
     if (kind === 'vr') onChange({ ...value, valueRangeKey: undefined })
     if (kind === 'd') onChange({ ...value, daysKey: undefined })
@@ -82,55 +89,44 @@ export default function Filters({ typeOptions, valueRanges, daysOptions, value, 
           {valueRanges && valueRanges.length > 0 && (
             <div className="field">
               <div className="label">Value Range</div>
-              <select
-                className="select"
-                value={draft.valueRangeKey ?? ''}
-                onChange={(e) => setDraft((d) => ({ ...d, valueRangeKey: e.target.value || undefined }))}
-              >
-                <option value="">Any</option>
-                {valueRanges.map((vr) => (
-                  <option key={vr.key} value={vr.key}>{vr.label}</option>
-                ))}
-              </select>
+              <Select
+                value={draft.valueRangeKey}
+                onChange={(v) => setDraft((d) => ({ ...d, valueRangeKey: v || undefined }))}
+                options={(valueRanges ?? []).map(vr => ({ value: vr.key, label: vr.label }))}
+              />
             </div>
           )}
 
           {daysOptions && daysOptions.length > 0 && (
             <div className="field">
               <div className="label">Days Until Stockout</div>
-              <select
-                className="select"
-                value={draft.daysKey ?? ''}
-                onChange={(e) => setDraft((d) => ({ ...d, daysKey: e.target.value || undefined }))}
-              >
-                <option value="">Any</option>
-                {daysOptions.map((d) => (
-                  <option key={d.key} value={d.key}>{d.label}</option>
-                ))}
-              </select>
+              <Select
+                value={draft.daysKey}
+                onChange={(v) => setDraft((d) => ({ ...d, daysKey: v || undefined }))}
+                options={(daysOptions ?? []).map(d => ({ value: d.key, label: d.label }))}
+              />
             </div>
           )}
 
           <div className="actions">
-            <button
-              className="btn"
+            <Button
+              variant="secondary"
               onClick={() => {
                 setDraft({ types: [], valueRangeKey: undefined, daysKey: undefined })
                 onChange({ types: [], valueRangeKey: undefined, daysKey: undefined })
               }}
             >
               Clear All
-            </button>
-            <div className="spacer" />
-            <button
-              className="btn btn-primary"
+            </Button>
+            <Button
+              variant="primary"
               onClick={() => {
                 onChange(draft)
                 setOpen(false)
               }}
             >
               Apply
-            </button>
+            </Button>
           </div>
         </div>
       )}

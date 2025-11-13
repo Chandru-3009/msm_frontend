@@ -1,0 +1,48 @@
+ .root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  display: inline;
+}
+
+/* sizes */
+.sizeXs { font-size: 12px; line-height: 18px; }
+.sizeSm { font-size: 13px; line-height: 20px; }
+.sizeMd { font-size: 14px; line-height: 22px; }
+.sizeLg { font-size: 16px; line-height: 24px; }
+.sizeXl { font-size: 18px; line-height: 26px; }
+.size2xl { font-size: 20px; line-height: 28px; }
+.size3xl { font-size: 24px; line-height: 32px; }
+
+/* weights */
+.wRegular { font-weight: 400; }
+.wMedium { font-weight: 500; }
+.wSemibold { font-weight: 600; }
+.wBold { font-weight: 700; }
+
+/* colors (tokens) */
+.cDefault { color: var(--text); }
+.cMuted { color: var(--muted); }
+.cPrimary { color: var(--primary); }
+.cDanger { color: var(--danger); }
+.cHeading { color: #305875; }   /* as requested for headings */
+.cSubtitle { color: #62748E; }  /* as requested for subtitle */
+
+/* align */
+.aLeft { text-align: left; }
+.aCenter { text-align: center; display: block; }
+.aRight { text-align: right; display: block; }
+
+/* single-line truncation */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* multi-line clamp */
+.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+

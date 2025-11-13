@@ -1,16 +1,32 @@
+import InlineAlert from '@/shared/components/InlineAlert'
+import PurchaseAdvice from '@/shared/components/PurchaseAdvice'
+
 export default function QuoteHistoryTab() {
   return (
-    <div className="card" style={{ padding: 12 }}>
-      <h3 style={{ marginTop: 0 }}>Quote History</h3>
-      <div className="small">Coming soon. Placeholder table.</div>
-      <table className="table" style={{ marginTop: 8 }}>
-        <thead>
-          <tr><th>Date</th><th>Customer</th><th>Quantity</th><th>Quoted Price</th></tr>
-        </thead>
-        <tbody>
-          <tr><td colSpan={4} className="small" style={{ padding: 12 }}>No data</td></tr>
-        </tbody>
-      </table>
+    <div>
+      <div className="card" style={{ padding: 12 }}>
+        <InlineAlert
+          variant="success"
+          items={[
+            { label: 'Top Requester:', value: 'XYZ Manufacturing (30% Quotes)' },
+            { label: 'Total Quotes (12 Months):', value: '4,500,000 lbs' },
+            { label: 'Avg Quoted Price:', value: '$14.15/lb' },
+          ]}
+        />
+      </div>
+
+      <div className="card" style={{ padding: 12, marginTop: 12 }}>
+        <h3 style={{ marginTop: 0 }}>Quantity</h3>
+        <PurchaseAdvice
+          variant="neutral"
+          columns={3}
+          items={[
+            { label: 'Last 7 days', value: '4020 lbs', trendText: '+8% than previous period', trendTone: 'up' },
+            { label: 'Last 15 days', value: '7980 lbs', trendText: '-3% than previous period', trendTone: 'down' },
+            { label: 'Last 30 days', value: '9050 lbs', trendText: '0% than previous period', trendTone: 'neutral' },
+          ]}
+        />
+      </div>
     </div>
   )
 }

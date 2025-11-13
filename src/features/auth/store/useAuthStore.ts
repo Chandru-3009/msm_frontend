@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { ApiClient } from '@/shared/api/http'
 import { pca, loginRequest } from '@/features/auth/msal/msal'
 
 type AuthState = {
@@ -6,7 +7,9 @@ type AuthState = {
   otpVerified: boolean
   email?: string
   pendingOtpCode?: string
+  token?: string
   signInWithMicrosoft: () => Promise<void>
+  signInWithCredentials: (username: string, password: string) => Promise<boolean>
   resendOtp: () => Promise<void>
   verifyOtp: (code: string) => Promise<boolean>
   signOut: () => void
@@ -22,6 +25,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   otpVerified: false,
   email: undefined,
   pendingOtpCode: undefined,
+  token: undefined,
 
   // Microsoft sign-in via MSAL popup (allows user to cancel/try again)
   async signInWithMicrosoft() {
@@ -34,6 +38,31 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } catch (e: any) {
       if (e?.errorCode === 'interaction_in_progress') return
       throw e
+    }
+  },
+
+  // Temporary credential login using backend API (until MSAL is ready)
+  async signInWithCredentials(username: string, password: string) {
+    try {
+      const resp = await ApiClient.post('/auth/login/', { username, password })
+      // Try common token field names
+      const token = resp.data.data.tokens.access
+     
+      console.log("response", resp)
+
+      if (token) {
+        localStorage.setItem('authToken', token)
+      }
+
+      set({
+        isAuthenticated: true,
+        otpVerified: true, // bypass OTP flow for this temporary path
+        email: username,
+        token: token || undefined,
+      })
+      return true
+    } catch (e) {
+      return false
     }
   },
 
@@ -63,7 +92,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       otpVerified: false,
       email: undefined,
       pendingOtpCode: undefined,
+      token: undefined,
     })
+    localStorage.removeItem('authToken')
     // Trigger MSAL logout flow
     void pca.logoutRedirect({
       postLogoutRedirectUri: `${window.location.origin}/auth/login`,

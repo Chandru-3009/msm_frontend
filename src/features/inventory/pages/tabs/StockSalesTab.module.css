@@ -1,0 +1,35 @@
+ .kpiGrid {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   gap: 12px;
+   margin-top: 12px;
+ }
+ 
+ .section {
+   padding: 12px;
+ }
+ 
+ .sectionWithTop {
+   padding: 12px;
+   margin-top: 12px;
+ }
+ 
+ .sectionTitle {
+   margin-top: 0;
+ }
+ 
+ .h220 {
+   height: 220px;
+ }
+ 
+ .h240 {
+   height: 240px;
+ }
+
+ .notices {
+   display: grid;
+   gap: 12px;
+   margin-bottom: 12px;
+ }
+ 
+

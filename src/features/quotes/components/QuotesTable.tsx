@@ -6,6 +6,7 @@ import DateRangeButton from '@/shared/components/DateRange/DateRangeButton'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 import { fetchQuotes } from '../api'
 import { QuoteRow } from '../types'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const columns: ColumnDef<QuoteRow>[] = [
   {
@@ -21,7 +22,7 @@ const columns: ColumnDef<QuoteRow>[] = [
   {
     accessorKey: 'qty',
     header: 'Qty',
-    meta: { align: 'right' as const },
+    
     cell: (c) => {
       const v = c.getValue<number | undefined | null>()
       return v == null ? '-' : v.toLocaleString()
@@ -30,7 +31,7 @@ const columns: ColumnDef<QuoteRow>[] = [
   {
     accessorKey: 'price',
     header: 'Price',
-    meta: { align: 'right' as const },
+    
     cell: (c) => {
       const v = c.getValue<number | undefined | null>()
       return v == null ? '-' : `$${v.toLocaleString()}`
@@ -39,7 +40,7 @@ const columns: ColumnDef<QuoteRow>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: (c) => <span className="badge">{c.getValue<string | undefined>() ?? '-'}</span>,
+    cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" />,
   },
 ]
 

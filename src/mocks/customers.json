@@ -1,0 +1,7 @@
+[
+  { "id": "c1", "name": "ABC Steel", "totalOrders": 56, "totalQuantityLbs": 12125, "totalValueUsd": 870000 },
+  { "id": "c2", "name": "XYZ Steel Mills", "totalOrders": 45, "totalQuantityLbs": 6613, "totalValueUsd": 748000 },
+  { "id": "c3", "name": "DSA Steel Mills", "totalOrders": 25, "totalQuantityLbs": 33069, "totalValueUsd": 590000 }
+]
+
+

@@ -1,8 +1,12 @@
 @import './variables.css';
 @import './tabs.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 * { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+html, body, #root { 
+  height: 100vh;
+  overflow: hidden;
+ }
 body {
   margin: 0;
   font-family: var(--font);
@@ -16,21 +20,8 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
-.btn {
-  height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #fff;
-  cursor: pointer;
-}
-.btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn-primary {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-.btn-primary:hover { background: var(--primary-600); }
+
+
 .input {
   height: 34px;
   padding: 0 10px;

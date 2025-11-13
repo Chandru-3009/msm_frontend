@@ -1,0 +1,27 @@
+ .headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.backButton {
+  border: none !important;
+  background: transparent;
+  outline: none;
+ padding: 0;
+}
+.backButton img {
+  width: 14px;
+  height: 14px;
+}
+
+
+
+.spacer {
+  flex: 1;
+}
+
+
