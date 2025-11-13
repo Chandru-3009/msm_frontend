@@ -1,5 +1,6 @@
 import InlineAlert from '@/shared/components/InlineAlert'
 import PurchaseAdvice from '@/shared/components/PurchaseAdvice'
+import DataTable from '@/shared/components/DataTable/DataTable'
 
 export default function SalesHistoryTab() {
   return (
@@ -27,8 +28,16 @@ export default function SalesHistoryTab() {
           ]}
         />
       </div>
+      <DataTable
+        enableGlobalFilter={false}
+        data={[]}
+        columns={[
+          { accessorKey: 'date', header: 'Date' },
+          { accessorKey: 'customer', header: 'Customer' },
+          { accessorKey: 'quantity', header: 'Quantity' },
+          { accessorKey: 'price', header: 'Price' },
+        ]}
+      />
     </div>
   )
 }
-
-

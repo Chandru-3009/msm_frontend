@@ -69,7 +69,7 @@ export default function DataTable<T extends object>({
           <div style={{ display: 'flex',justifyContent: 'space-between', width: '100%',alignItems: 'center'}}>
           <div>total</div>
                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-               <SearchInput value={globalFilter ?? ''} onChange={(v) => setGlobalFilter(v)} placeholder={searchPlaceholder} />
+            {enableGlobalFilter && <SearchInput value={globalFilter ?? ''} onChange={(v) => setGlobalFilter(v)} placeholder={searchPlaceholder} />}
           
          
           {typeof toolbarRight === 'function'
