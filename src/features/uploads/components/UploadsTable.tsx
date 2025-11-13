@@ -5,6 +5,7 @@ import { UploadRow } from '../types'
 import { fetchUploads } from '../api'
 import { useMemo, useState } from 'react'
 import StatusBadge from '@/shared/components/StatusBadge'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
 
 const columns: ColumnDef<UploadRow>[] = [
   { accessorKey: 'date', header: 'Date', cell: (c) => {
@@ -35,11 +36,15 @@ export default function UploadsTable() {
 
   const toolbarRight = (
     <div style={{ display: 'flex', gap: 8 }}>
-      <select className="select" value={type} onChange={(e) => setType(e.target.value)}>
-        <option value="">Data Type</option>
-        {types.map((t) => <option key={t} value={t}>{t}</option>)}
-      </select>
-      <button className="btn btn-primary">Upload Data</button>
+      <PillSelect
+        value={type}
+        onChange={setType}
+        options={types.map((t) => ({ value: t, label: t }))}
+        placeholder="All Data Types"
+        allOptionLabel="All Data Types"
+        ariaLabel="Filter by data type"
+      />
+        <button className="btn btn-primary">Upload Data</button>
     </div>
   )
 

@@ -10,7 +10,7 @@
 .tr:hover td { background: #fcfcff; }
 .cell-right { text-align: right; }
 .badge { padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; background: #fff; }
-.toolbar-row { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+.toolbar-row { display: flex;  gap: 12px; align-items: center; margin-bottom: 12px; }
 .pagination { display: flex; align-items: center; gap: 8px; padding: 12px; }
 .page-btn { min-width: 34px; height: 34px; padding: 0 8px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; }
 .page-btn[aria-current="page"] { background: var(--primary); color: #fff; border-color: var(--primary); }

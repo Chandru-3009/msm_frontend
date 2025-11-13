@@ -8,7 +8,11 @@ import { useNavigate } from 'react-router-dom'
 import Filters, { FiltersValue, ValueRangeOption, DaysOption } from '@/shared/components/Filters/Filters'
 import StatusBadge from '@/shared/components/StatusBadge'
 import downloadIcon from '@/assets/icons/download_icon.svg'
-
+import StatCard from '@/shared/components/StatCard'
+import cartIcon from '@/assets/icons/cart_icon.svg'
+import clockIcon from '@/assets/icons/clock_icon.svg'
+import stockIcon from '@/assets/icons/stock_icon.svg'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
 const columns: ColumnDef<InventoryRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
   { accessorKey: 'type', header: 'Type' },
@@ -98,19 +102,53 @@ export default function InventoryTable() {
         value={filters}
         onChange={setFilters}
       />
-      <select className="select" value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="">All Status</option>
-        {statuses.map((s) => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
-      <button className="btn" title="Download">
-        <img src={downloadIcon} alt="" width={16} height={16} />
+      <PillSelect
+        value={status}
+        onChange={setStatus}
+        options={statuses.map((s) => ({ value: s, label: s }))}
+        placeholder="All Status"
+        allOptionLabel="All Status"
+        ariaLabel="Filter by status"
+      />
+      <button className="icon-pill" title="Download">
+        <img src={downloadIcon} alt="" />
       </button>
     </div>
   )
 
   return (
+    <>
+   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 12 }}>
+    <StatCard
+        title="Total Stock"
+        value={`lbs`}
+        iconSrc={stockIcon}
+        type="stock"
+        linkText="All Products"
+      />
+      <StatCard
+        title="Open customer Orders"
+        value={`lbs`}
+        iconSrc={cartIcon}
+        type="customer"
+        metaDate="Oct 7, 2025"
+      />
+     
+      <StatCard
+        title="Stock out"
+        value={`0.9 mo`}
+        iconSrc={clockIcon}
+        type="stockout"
+      />
+
+      <StatCard
+        title="Open vendor Orders"
+        value={`lbs`}
+        iconSrc={cartIcon}
+        type="vendor"
+        metaDate="Nov 28, 2025"
+      />
+    </div>
     <div className="card" style={{ padding: 16 }}>
       <DataTable
         data={filtered}
@@ -119,6 +157,7 @@ export default function InventoryTable() {
         onRowClick={(row) => navigate(`/inventory/${(row as InventoryRow).id}`)}
       />
     </div>
+    </>
   )
 }
 

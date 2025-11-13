@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ActivityRow } from '../types'
 import { fetchActivity } from '../api'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
 
 const columns: ColumnDef<ActivityRow>[] = [
   { accessorKey: 'dateTime', header: 'Date', cell: (c) => {
@@ -32,10 +33,14 @@ export default function ActivityTable() {
 
   const toolbarRight = (
     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-      <select className="select" value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="">All Status</option>
-        {statuses.map((s) => <option key={s} value={s}>{s}</option>)}
-      </select>
+      <PillSelect
+        value={status}
+        onChange={setStatus}
+        options={statuses.map((s) => ({ value: s, label: s }))}
+        placeholder="All Status"
+        allOptionLabel="All Status"
+        ariaLabel="Filter by status"
+      />
       <button className="btn">Filters</button>
     </div>
   )

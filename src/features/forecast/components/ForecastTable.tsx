@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query'
 import { ForecastRow } from '../types'
 import { fetchForecast } from '../api'
 import { useMemo, useState } from 'react'
-import Filters, { FiltersValue, DaysOption } from '@/shared/components/Filters/Filters'
+import Filters, { FiltersValue, DaysOption, ValueRangeOption } from '@/shared/components/Filters/Filters'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 import StatusBadge from '@/shared/components/StatusBadge'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
 
 const columns: ColumnDef<ForecastRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
@@ -36,7 +37,7 @@ const columns: ColumnDef<ForecastRow>[] = [
 ]
 
 export default function ForecastTable() {
-  const { data, isLoading } = useQuery({ queryKey: ['forecast'], queryFn: fetchForecast })
+  const { data, isLoading } = useQuery({ queryKey: ['forecast'], queryFn: fetchForecast })  
   const rows = Array.isArray(data) ? data : []
 
   const typeOptions = useMemo(() => Array.from(new Set(rows.map((d) => d.type))).sort(), [rows])
@@ -51,7 +52,12 @@ export default function ForecastTable() {
 
   const [filters, setFilters] = useState<FiltersValue>({ types: [] })
   const [status, setStatus] = useState<string>('')
-
+  const valueRanges: ValueRangeOption[] = useMemo(() => [
+    { key: 'lt100k', label: '$0–$100K', max: 100_000 },
+    { key: '100to500', label: '$100K–$500K', min: 100_000, max: 500_000 },
+    { key: '500to900', label: '$500K–$900K', min: 500_000, max: 900_000 },
+    { key: 'gt900', label: '$900K+', min: 900_000 },
+  ], [])
   const filtered = useMemo(() => {
     return rows.filter((r) => {
       if (status && r.status !== status) return false
@@ -70,18 +76,21 @@ export default function ForecastTable() {
     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
       <Filters
         typeOptions={typeOptions}
+        valueRanges={valueRanges}
         daysOptions={daysOptions}
         value={filters}
         onChange={setFilters}
       />
-      <select className="select" value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="">All Status</option>
-        {statuses.map((s) => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
-      <button className="btn" title="Download">
-        <img src={downloadIcon} alt="" width={16} height={16} />
+        <PillSelect
+          value={status}
+          onChange={setStatus}
+          options={statuses.map((s) => ({ value: s, label: s }))}
+          placeholder="All Status"
+          allOptionLabel="All Status"
+          ariaLabel="Filter by status"
+        />
+      <button className="icon-pill" title="Download">
+        <img src={downloadIcon} alt="" />
       </button>
     </div>
   )

@@ -58,9 +58,11 @@ export default function Filters({ typeOptions, valueRanges, daysOptions, value, 
 
   return (
     <div className="filters">
-      <button className="btn" onClick={() => setOpen((o) => !o)}>
-        {/* simple icon mimic */}
-        <span style={{ marginRight: 6 }}>☰</span> Filters
+      <button className="trigger" onClick={() => setOpen((o) => !o)}>
+        <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M6 12h12M10 18h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+        <span>Filters</span>
       </button>
 
       <div className="chips">

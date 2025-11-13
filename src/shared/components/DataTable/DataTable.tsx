@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import clsx from 'clsx'
+import Pagination from '@/shared/components/Pagination'
 import SearchInput from '@/shared/components/inputs/SearchInput'
 
 type Props<T extends object> = import('./types').TableProps<T>
@@ -59,22 +60,23 @@ export default function DataTable<T extends object>({
     onChange?.({ pageIndex, pageSize, sorting, globalFilter, columnFilters })
   }, [pageIndex, pageSize, sorting, globalFilter, columnFilters])
 
-  const pagesToShow = Array.from({ length: table.getPageCount() || 1 }, (_, i) => i).slice(
-    Math.max(0, table.getState().pagination.pageIndex - 2),
-    Math.max(0, table.getState().pagination.pageIndex - 2) + 5
-  )
+  const pageCountComputed = table.getPageCount() || 1
 
   return (
     <div>
       {(enableGlobalFilter || toolbarRight) && (
         <div className="toolbar-row">
-                <SearchInput value={globalFilter ?? ''} onChange={(v) => setGlobalFilter(v)} placeholder={searchPlaceholder} />
+          <div style={{ display: 'flex',justifyContent: 'space-between', width: '100%',alignItems: 'center'}}>
+          <div>total</div>
+               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+               <SearchInput value={globalFilter ?? ''} onChange={(v) => setGlobalFilter(v)} placeholder={searchPlaceholder} />
           
-          <div className="spacer" />
+         
           {typeof toolbarRight === 'function'
             ? toolbarRight({ pageIndex, pageSize, sorting, globalFilter, columnFilters })
             : toolbarRight}
-         
+               </div>
+         </div>
         </div>
       )}
 
@@ -122,24 +124,11 @@ export default function DataTable<T extends object>({
         </table>
       </div>
 
-      <div className="pagination">
-        <button className="page-btn" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>{'‹'}</button>
-        {pagesToShow.map((p) => (
-          <button
-            key={p}
-            className="page-btn"
-            aria-current={p === pageIndex ? 'page' : undefined}
-            onClick={() => table.setPageIndex(p)}
-          >
-            {p + 1}
-          </button>
-        ))}
-        <button className="page-btn" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>{'›'}</button>
-        <div className="spacer" />
-        <span className="small">
-          Page {pageIndex + 1} of {table.getPageCount() || 1}
-        </span>
-      </div>
+      <Pagination
+        page={pageIndex}
+        pageCount={pageCountComputed}
+        onPageChange={(p) => table.setPageIndex(p)}
+      />
     </div>
   )
 }

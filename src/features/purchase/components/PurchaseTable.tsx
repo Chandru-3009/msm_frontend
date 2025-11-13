@@ -4,8 +4,9 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchPurchases } from '../api'
 import { PurchaseRow } from '../types'
 import { useMemo, useState } from 'react'
-import DateRangeButton from '@/shared/components/DateRange/DateRangeButton'
 import StatusBadge from '@/shared/components/StatusBadge'
+import PillSelect from '@/shared/components/PillSelect'
+import { useNavigate } from 'react-router-dom'
 
 const columns: ColumnDef<PurchaseRow>[] = [
   { accessorKey: 'date', header: 'Date', cell: (c) => {
@@ -34,46 +35,37 @@ export default function PurchaseTable() {
   const { data, isLoading } = useQuery({ queryKey: ['purchases'], queryFn: fetchPurchases })
 
   const rows = Array.isArray(data) ? data : []
+  const navigate = useNavigate()
 
   const [vendor, setVendor] = useState<string>('')
-  const [status, setStatus] = useState<string>('')
-  const [dateRange, setDateRange] = useState<{ from?: string; to?: string } | undefined>()
-
   const vendors = useMemo(() => Array.from(new Set(rows.map((d) => d.vendor))).sort(), [rows])
 
-  const filtered = useMemo(() => {
-    return rows.filter((r) => {
-      if (vendor && r.vendor !== vendor) return false
-      if (status && r.status !== status) return false
-      if (dateRange?.from && new Date(r.date) < new Date(dateRange.from)) return false
-      if (dateRange?.to && new Date(r.date) > new Date(dateRange.to)) return false
-      return true
-    })
-  }, [rows, vendor, status, dateRange])
+
 
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
 
   const toolbarRight = (
     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-      <select className="select" value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="">All Status</option>
-        <option value="Received">Received</option>
-        <option value="In Transit">In Transit</option>
-        <option value="Ordered">Ordered</option>
-      </select>
-      <select className="select" value={vendor} onChange={(e) => setVendor(e.target.value)}>
-        <option value="">All Vendors</option>
-        {vendors.map((v) => (
-          <option key={v} value={v}>{v}</option>
-        ))}
-      </select>
-      <DateRangeButton value={dateRange} onChange={setDateRange} />
+      <PillSelect
+        value={vendor}
+        onChange={setVendor}
+        options={vendors.map((v) => ({ value: v, label: v }))}
+        placeholder="All Vendors"
+        allOptionLabel="All Vendors"
+        ariaLabel="Filter by vendor"
+      />
     </div>
   )
 
   return (
     <div className="card" style={{ padding: 16 }}>
-      <DataTable data={filtered} columns={columns} toolbarRight={toolbarRight} searchPlaceholder="Search" />
+      <DataTable
+        data={rows}
+        columns={columns}
+        toolbarRight={toolbarRight}
+        searchPlaceholder="Search"
+        onRowClick={(row) => navigate(`/purchase/${(row as PurchaseRow).po}`)}
+      />
     </div>
   )
 }

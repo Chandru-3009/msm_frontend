@@ -9,6 +9,7 @@ import CustomersPage from '@/features/customers/pages/CustomersPage'
 import CustomerOrdersPage from '@/features/customers/pages/CustomerOrdersPage'
 import OrderDetailPage from '@/features/customers/pages/OrderDetailPage'
 import SalesHistoryPage from '@/features/sales/pages/SalesHistoryPage'
+import SalesDetailPage from '@/features/sales/pages/SalesDetailPage'
 import Dashboard from '@/features/dashboard/pages/Dashboard'
 import UserManagementPage from '@/features/users/pages/UserManagementPage'
 import DataUploadPage from '@/features/uploads/pages/DataUploadPage'
@@ -25,6 +26,7 @@ import QuoteHistoryTab from '@/features/inventory/pages/tabs/QuoteHistoryTab'
 import VendorsPage from '@/features/vendors/pages/VendorsPage'
 import VendorOrdersPage from '@/features/vendors/pages/VendorOrdersPage'
 import VendorOrderDetailPage from '@/features/vendors/pages/OrderDetailPage'
+import PurchaseDetailPage from '@/features/purchase/pages/PurchaseDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -63,11 +65,13 @@ const router = createBrowserRouter([
       { path: 'vendors/:id', element: <VendorOrdersPage /> },
       { path: 'vendors/:id/orders/:orderId', element: <VendorOrderDetailPage /> },
       { path: 'sales', element: <SalesHistoryPage /> },
+      { path: 'sales/:id', element: <SalesDetailPage /> },
       { path: 'upload', element: <DataUploadPage /> },
       { path: 'activity', element: <ActivityLogsPage /> },
       { path: 'users', element: <UserManagementPage /> },
       { path: 'quotes', element: <QuoteHistoryPage /> },
       { path: 'purchase', element: <PurchaseHistoryPage /> },
+      { path: 'purchase/:id', element: <PurchaseDetailPage /> },
     ],
   },
   { path: '*', element: <Navigate to="/" replace /> },
