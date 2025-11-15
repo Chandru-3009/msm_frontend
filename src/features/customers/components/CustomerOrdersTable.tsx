@@ -7,6 +7,7 @@ import { fetchCustomerOrders } from '../api'
 import StatusBadge from '@/shared/components/StatusBadge'
 import { useMemo, useState } from 'react'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import Filters from '@/shared/components/Filters/Filters'
 
 const columns: ColumnDef<CustomerOrderRow>[] = [
   { accessorKey: 'date', header: 'Date' },
@@ -51,6 +52,13 @@ export default function CustomerOrdersTable() {
          allOptionLabel="All Status"
          ariaLabel="Filter by status"
        />
+       <Filters
+        typeOptions={[]}
+        valueRanges={[]}
+        daysOptions={[]}
+        value={{ types: [] }}
+        onChange={() => {}}
+      />
      </div>
    )
 

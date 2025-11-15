@@ -8,6 +8,7 @@ import StatusBadge from '@/shared/components/StatusBadge'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
 import { useMemo } from 'react'
 import { useState } from 'react'
+import Filters from '@/shared/components/Filters/Filters'
 
 const columns: ColumnDef<VendorOrderRow>[] = [
   { accessorKey: 'date', header: 'Date' },
@@ -49,6 +50,13 @@ export default function VendorOrdersTable() {
         placeholder="All Status"
         allOptionLabel="All Status"
         ariaLabel="Filter by status"
+      />
+      <Filters
+        typeOptions={[]}
+        valueRanges={[]}
+        daysOptions={[]}
+        value={{ types: [] }}
+        onChange={() => {}}
       />
     </div>
   )
