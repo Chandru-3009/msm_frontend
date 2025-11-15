@@ -13,6 +13,8 @@ import cartIcon from '@/assets/icons/cart_icon.svg'
 import clockIcon from '@/assets/icons/clock_icon.svg'
 import stockIcon from '@/assets/icons/stock_icon.svg'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import Typography from '@/shared/components/Typography/Typography'
+import { inferStatusVariant, type Variant as StatusVariant } from '@/shared/components/StatusBadge/StatusBadge'
 const columns: ColumnDef<InventoryRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
   { accessorKey: 'type', header: 'Type' },
@@ -42,7 +44,15 @@ const columns: ColumnDef<InventoryRow>[] = [
   } },
   { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout',  cell: (c) => {
     const v = c.getValue<number | undefined>()
-    return v == null ? '-' : `${v} days`
+    if (v == null) return '-'
+    const statusText = (c.row.original as InventoryRow).status
+    const variant = inferStatusVariant(statusText)
+    const colorByVariant: Record<StatusVariant, string> = {
+      success: 'success',  // green
+      active: 'primary',   // blue
+      critical: 'danger',  // red
+    }
+    return <Typography as="span" size="md" weight="medium" color={colorByVariant[variant]}>{v} days</Typography>
   } },
   { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
 ]

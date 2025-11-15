@@ -27,6 +27,7 @@ import VendorsPage from '@/features/vendors/pages/VendorsPage'
 import VendorOrdersPage from '@/features/vendors/pages/VendorOrdersPage'
 import VendorOrderDetailPage from '@/features/vendors/pages/OrderDetailPage'
 import PurchaseDetailPage from '@/features/purchase/pages/PurchaseDetailPage'
+import QuoteDetailPage from '@/features/quotes/pages/QuoteDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -70,11 +71,12 @@ const router = createBrowserRouter([
       { path: 'activity', element: <ActivityLogsPage /> },
       { path: 'users', element: <UserManagementPage /> },
       { path: 'quotes', element: <QuoteHistoryPage /> },
+      { path: 'quotes/:id', element: <QuoteDetailPage /> },
       { path: 'purchase', element: <PurchaseHistoryPage /> },
       { path: 'purchase/:id', element: <PurchaseDetailPage /> },
     ],
   },
-  { path: '*', element: <Navigate to="/" replace /> },
+  { path: '*', element: <Navigate to='/' replace /> },
 ])
 
 export default function AppRouter() {

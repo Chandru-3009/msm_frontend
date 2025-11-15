@@ -5,6 +5,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { CustomerOrderRow } from '../types'
 import { fetchCustomerOrders } from '../api'
 import StatusBadge from '@/shared/components/StatusBadge'
+import { useMemo, useState } from 'react'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
 
 const columns: ColumnDef<CustomerOrderRow>[] = [
   { accessorKey: 'date', header: 'Date' },
@@ -32,14 +34,30 @@ export default function CustomerOrdersTable() {
     queryFn: () => fetchCustomerOrders(id ?? ''),
     enabled: !!id,
   })
+  const [type, setType] = useState<string>('')
+  const types = useMemo(() => Array.from(new Set(data?.map((d) => d.status) ?? [])).sort(), [data])
   const rows = Array.isArray(data) ? data : []
 
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
   if (isError) return <div className="card" style={{ padding: 16, color: 'crimson' }}>Failed to load orders{(error as any)?.message ? `: ${(error as any).message}` : ''}</div>
 
+  const toolbarRight = (
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+     <PillSelect
+         value={type}
+         onChange={setType}
+         options={types.map((c) => ({ value: c, label: c }))}
+         placeholder="All Status"
+         allOptionLabel="All Status"
+         ariaLabel="Filter by status"
+       />
+     </div>
+   )
+
   return (
     <div className="card" style={{ padding: 16 }}>
       <DataTable
+        toolbarRight={toolbarRight}
         data={rows}
         columns={columns}
         onRowClick={(row) => navigate(`/customers/${id}/orders/${(row as CustomerOrderRow).id}`)}

@@ -1,0 +1,21 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.icon { width: 14px; height: 14px; line-height: 0; }
+
+.rSm { border-radius: 6px; }
+.rMd { border-radius: 8px; }
+.rLg { border-radius: 12px; }
+.rFull { border-radius: 9999px; }
+
+

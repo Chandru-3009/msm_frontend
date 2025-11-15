@@ -5,9 +5,10 @@ import StatusBadge from '@/shared/components/StatusBadge'
 
 type Props = {
   data: OrderSummary
+  showRow2?: boolean
 }
 
-export default function OrderSummaryHeader({ data }: Props) {
+export default function OrderSummaryHeader({ data, showRow2 = true }: Props) {
   const unitPrice = data.totalQuantityLbs > 0 ? data.totalValueUsd / data.totalQuantityLbs : 0
   return (
     <div className={styles.wrap}>
@@ -33,32 +34,34 @@ export default function OrderSummaryHeader({ data }: Props) {
           </Typography>
         </div>
       </div>
-      <div className={styles.row2}>
-        <div className={styles.innerRow}>
-          <Typography size="sm" color="muted">Vendor</Typography>
-          <Typography weight="medium" color="default">{data.vendor ?? '-'}</Typography>
+      {showRow2 && (
+        <div className={styles.row2}>
+          <div className={styles.innerRow}>
+            <Typography size="sm" color="muted">Vendor</Typography>
+            <Typography weight="medium" color="default">{data.vendor ?? '-'}</Typography>
+          </div>
+          <div className={styles.innerRow}>
+            <Typography size="sm" color="muted">Payment Terms</Typography>
+            <Typography weight="medium" color="default">{data.paymentTerms}</Typography>
+          </div>
+          <div className={styles.innerRow}>
+            <Typography size="sm" color="muted">Ship Via</Typography>
+            <Typography weight="medium" color="default">{data.shipVia}</Typography>
+          </div>
+          <div className={styles.innerRow}>
+            <Typography size="sm" color="muted">FOB</Typography>
+            <Typography weight="medium" color="default">{data.fob ?? '-'}</Typography>
+          </div>
+          <div className={styles.innerRow}>
+            <Typography size="sm" color="muted">Freight Cost</Typography>
+            <Typography weight="medium" color="default">{data.freightCostUsd != null ? `$${data.freightCostUsd.toFixed(2)}` : '-'}</Typography>
+          </div>
+          <div className={styles.innerRow}>
+            <Typography size="sm" color="muted">Expected Delivery</Typography>
+            <Typography weight="medium" color="default">{data.expectedDelivery ?? '-'}</Typography>
+          </div>
         </div>
-        <div className={styles.innerRow}>
-          <Typography size="sm" color="muted">Payment Terms</Typography>
-          <Typography weight="medium" color="default">{data.paymentTerms}</Typography>
-        </div>
-        <div className={styles.innerRow}>
-          <Typography size="sm" color="muted">Ship Via</Typography>
-          <Typography weight="medium" color="default">{data.shipVia}</Typography>
-        </div>
-        <div className={styles.innerRow}>
-          <Typography size="sm" color="muted">FOB</Typography>
-          <Typography weight="medium" color="default">{data.fob ?? '-'}</Typography>
-        </div>
-        <div className={styles.innerRow}>
-          <Typography size="sm" color="muted">Freight Cost</Typography>
-          <Typography weight="medium" color="default">{data.freightCostUsd != null ? `$${data.freightCostUsd.toFixed(2)}` : '-'}</Typography>
-        </div>
-        <div className={styles.innerRow}>
-          <Typography size="sm" color="muted">Expected Delivery</Typography>
-          <Typography weight="medium" color="default">{data.expectedDelivery ?? '-'}</Typography>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

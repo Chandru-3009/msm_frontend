@@ -6,6 +6,12 @@ import { fetchUploads } from '../api'
 import { useMemo, useState } from 'react'
 import StatusBadge from '@/shared/components/StatusBadge'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import Button from '@/shared/components/Button/Button'
+import downloadIcon from '@/assets/icons/download_icon.svg'
+import downloadLinkIcon from '@/assets/icons/doc_icon.svg'
+import Typography from '@/shared/components/Typography/Typography'
+
+
 
 const columns: ColumnDef<UploadRow>[] = [
   { accessorKey: 'date', header: 'Date', cell: (c) => {
@@ -14,13 +20,13 @@ const columns: ColumnDef<UploadRow>[] = [
   } },
   { accessorKey: 'user', header: 'User' },
   { accessorKey: 'type', header: 'Type' },
-  { accessorKey: 'fileName', header: 'File Name', cell: (c) => <a href="#">{c.getValue<string>()}</a> },
-  { accessorKey: 'records', header: 'Records',cell: (c) => {
+  { accessorKey: 'fileName', header: 'File Name', cell: (c) => <Typography as="span" size="md" weight="medium" color="primary">{c.getValue<string>()}</Typography> },
+  { accessorKey: 'records',  header: 'Records',cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
   { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
-  { id: 'action', header: 'Action', cell: () => <a href="#" className="small">Download</a> },
+  { id: 'action', header: 'Action', meta: { align: 'center' as const }, cell: () => <img src={downloadLinkIcon} alt="Download" /> },
 ]
 
 export default function UploadsTable() {
@@ -44,7 +50,9 @@ export default function UploadsTable() {
         allOptionLabel="All Data Types"
         ariaLabel="Filter by data type"
       />
-        <button className="btn btn-primary">Upload Data</button>
+        <Button variant="primary" icon={<img src={downloadIcon} alt="Download" />}>
+          Upload Data
+        </Button>
     </div>
   )
 

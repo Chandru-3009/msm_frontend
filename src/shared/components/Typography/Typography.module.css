@@ -25,6 +25,8 @@
 .cDanger { color: var(--danger); }
 .cHeading { color: #305875; }   /* as requested for headings */
 .cSubtitle { color: #62748E; }  /* as requested for subtitle */
+.cSecondary { color: #45556C; }
+.cSuccess { color: #197E48; }   /* matches StatusBadge success color */
 
 /* align */
 .aLeft { text-align: left; }

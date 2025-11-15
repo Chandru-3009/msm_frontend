@@ -7,7 +7,9 @@ import { useMemo, useState } from 'react'
 import Filters, { FiltersValue, DaysOption, ValueRangeOption } from '@/shared/components/Filters/Filters'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 import StatusBadge from '@/shared/components/StatusBadge'
+import { inferStatusVariant, type Variant as StatusVariant } from '@/shared/components/StatusBadge/StatusBadge'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import Typography from '@/shared/components/Typography/Typography'
 
 const columns: ColumnDef<ForecastRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
@@ -31,7 +33,15 @@ const columns: ColumnDef<ForecastRow>[] = [
   } },
   { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout',  cell: (c) => {
     const v = c.getValue<number | undefined>()
-    return v == null ? '-' : `${v} days`
+    if (v == null) return '-'
+    const statusText = (c.row.original as ForecastRow).status
+    const variant = inferStatusVariant(statusText)
+    const colorByVariant: Record<StatusVariant, string> = {
+      success: 'success',  // green
+      active: 'primary',   // blue
+      critical: 'danger',  // red
+    }
+    return <Typography as="span" size="md" weight="medium" color={colorByVariant[variant]}>{v} days</Typography>
   } },
   { accessorKey: 'status', header: 'Status', cell: (c) => <StatusBadge label={c.getValue<string | undefined>() ?? '-'}  radius="sm" /> },
 ]

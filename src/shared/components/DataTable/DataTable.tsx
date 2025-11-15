@@ -86,7 +86,14 @@ export default function DataTable<T extends object>({
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>
                 {hg.headers.map((h) => (
-                  <th key={h.id} colSpan={h.colSpan}>
+                  <th
+                    key={h.id}
+                    colSpan={h.colSpan}
+                    className={clsx(
+                      (((h.column.columnDef as any).meta?.align) === 'right') && 'cell-right',
+                      (((h.column.columnDef as any).meta?.align) === 'center') && 'cell-center',
+                    )}
+                  >
                     {h.isPlaceholder ? null : (
                       <span
                         className="th-sort"
@@ -111,7 +118,13 @@ export default function DataTable<T extends object>({
                 style={onRowClick ? { cursor: 'pointer' } : undefined}
               >
                 {r.getVisibleCells().map((c) => (
-                  <td key={c.id} className={clsx(((c.column.columnDef as any).meta?.align) === 'right' && 'cell-right')}>
+                  <td
+                    key={c.id}
+                    className={clsx(
+                      (((c.column.columnDef as any).meta?.align) === 'right') && 'cell-right',
+                      (((c.column.columnDef as any).meta?.align) === 'center') && 'cell-center',
+                    )}
+                  >
                     {flexRender(c.column.columnDef.cell, c.getContext())}
                   </td>
                 ))}

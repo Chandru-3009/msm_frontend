@@ -16,8 +16,8 @@ export default function PurchaseHistoryTab() {
         />
       </div>
 
-      <div className="card" style={{ padding: 12, marginTop: 12 }}>
-        <h3 style={{ marginTop: 0 }}>Quantity</h3>
+      <div className="card" style={{ padding: 12, marginTop: 12, marginBottom: 12 }}>
+        <h3 style={{ margin: 0 }}>Quantity</h3>
         <PurchaseAdvice
           variant="neutral"
           columns={3}

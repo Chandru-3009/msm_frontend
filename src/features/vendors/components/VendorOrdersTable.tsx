@@ -5,6 +5,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { VendorOrderRow } from '../types'
 import { fetchVendorOrders } from '../api'
 import StatusBadge from '@/shared/components/StatusBadge'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import { useMemo } from 'react'
+import { useState } from 'react'
 
 const columns: ColumnDef<VendorOrderRow>[] = [
   { accessorKey: 'date', header: 'Date' },
@@ -33,13 +36,27 @@ export default function VendorOrdersTable() {
     enabled: !!id,
   })
   const rows = Array.isArray(data) ? data : []
-
+  const [status, setStatus] = useState<string>('')
+  const statuses = useMemo(() => Array.from(new Set(rows.map((d) => d.status) ?? [])).sort(), [rows])
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
   if (isError) return <div className="card" style={{ padding: 16, color: 'crimson' }}>Failed to load orders{(error as any)?.message ? `: ${(error as any).message}` : ''}</div>
+  const toolbarRight = (
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+      <PillSelect
+        value={status}
+        onChange={setStatus}
+        options={statuses.map((s) => ({ value: s, label: s }))}
+        placeholder="All Status"
+        allOptionLabel="All Status"
+        ariaLabel="Filter by status"
+      />
+    </div>
+  )
 
   return (
     <div className="card" style={{ padding: 16 }}>
       <DataTable
+        toolbarRight={toolbarRight}
         data={rows}
         columns={columns}
         onRowClick={(row) => navigate(`/vendors/${id}/orders/${(row as VendorOrderRow).id}`)}

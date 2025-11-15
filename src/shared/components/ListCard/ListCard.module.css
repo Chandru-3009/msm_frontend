@@ -1,0 +1,62 @@
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px 0px #00000012;
+  padding: 16px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.title {
+  font-weight: 600;
+  color: #111827;
+}
+.subtitle {
+  font-size: 12px;
+  color: #6b7280;
+}
+.view {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: default;
+}
+.list {
+  display: grid;
+  gap: 0;
+  margin-top: 8px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #E5E7EB;
+}
+.row:last-child { border-bottom: 0; }
+.cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cellIcon { width: 16px; height: 16px; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+}
+.muted {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+

@@ -56,7 +56,7 @@ export default function OrderItemsTable() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {summary && <OrderSummaryHeader data={summary} />}
       <div className="card" style={{ padding: 16 }}>
-        <DataTable data={items} columns={columns} />
+        <DataTable enableGlobalFilter={false} data={items} columns={columns}  />
       </div>
     </div>
   )

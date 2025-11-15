@@ -5,6 +5,10 @@
    font-weight: 600;
    border: 1px solid transparent;
    cursor: pointer;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
  }
  
  .primary {
@@ -25,6 +29,17 @@
    background: transparent;
    color: #0f172a;
    border-color: #e5e7eb;
+ }
+ 
+ .icon {
+   display: inline-flex;
+   line-height: 0;
+   filter: brightness(0) invert(1);
+ }
+ 
+ .label {
+   display: inline-flex;
+   align-items: center;
  }
  
 

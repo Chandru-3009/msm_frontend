@@ -2,12 +2,12 @@ import DataTable from '@/shared/components/DataTable/DataTable'
 import { ColumnDef } from '@tanstack/react-table'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import DateRangeButton from '@/shared/components/DateRange/DateRangeButton'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 import { fetchQuotes } from '../api'
 import { QuoteRow } from '../types'
 import StatusBadge from '@/shared/components/StatusBadge'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import { useNavigate } from 'react-router-dom'
 
 const columns: ColumnDef<QuoteRow>[] = [
   {
@@ -48,6 +48,7 @@ const columns: ColumnDef<QuoteRow>[] = [
 export default function QuotesTable() {
   const { data, isLoading } = useQuery({ queryKey: ['quotes'], queryFn: fetchQuotes })
   const rows = Array.isArray(data) ? data : []
+  const navigate = useNavigate()
 
   const [status, setStatus] = useState<string>('')
   const [customer, setCustomer] = useState<string>('')
@@ -81,14 +82,20 @@ export default function QuotesTable() {
         allOptionLabel="All Customers"
         ariaLabel="Filter by customer"
       />
-      <DateRangeButton value={dateRange} onChange={setDateRange} />
-      <button className="btn" title="Download"><img src={downloadIcon} alt="" width={16} height={16} /></button>
+      <button className="icon-pill" title="Download">
+        <img src={downloadIcon} alt="" />
+      </button>
     </div>
   )
 
   return (
     <div className="card" style={{ padding: 16 }}>
-      <DataTable data={filtered} columns={columns} toolbarRight={toolbarRight} />
+      <DataTable
+        data={filtered}
+        columns={columns}
+        toolbarRight={toolbarRight}
+        onRowClick={(row) => navigate(`/quotes/${(row as QuoteRow).id}`)}
+      />
     </div>
   )
 }

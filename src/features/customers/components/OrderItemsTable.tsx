@@ -5,6 +5,10 @@ import { useParams } from 'react-router-dom'
 import { OrderItemRow } from '../types'
 import { fetchOrderItems } from '../api'
 import OrderSummaryHeader from './OrderSummary'
+import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import Filters from '@/shared/components/Filters/Filters'
+import { useState } from 'react'
+import { useMemo } from 'react'
 
 const columns: ColumnDef<OrderItemRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
@@ -46,17 +50,20 @@ export default function OrderItemsTable() {
     enabled: !!id && !!orderId,
   })
 
+ 
+
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
   if (isError) return <div className="card" style={{ padding: 16, color: 'crimson' }}>Failed to load order{(error as any)?.message ? `: ${(error as any).message}` : ''}</div>
 
   const items = data?.items ?? []
   const summary = data?.summary
+ 
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {summary && <OrderSummaryHeader data={summary} />}
       <div className="card" style={{ padding: 16 }}>
-        <DataTable data={items} columns={columns} />
+        <DataTable enableGlobalFilter={false} data={items} columns={columns} />
       </div>
     </div>
   )
