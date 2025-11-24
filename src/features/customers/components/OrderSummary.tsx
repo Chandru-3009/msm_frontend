@@ -38,7 +38,7 @@ export default function OrderSummaryHeader({ data, showRow2 = true }: Props) {
         <div className={styles.row2}>
           <div className={styles.innerRow}>
             <Typography size="sm" color="muted">Vendor</Typography>
-            <Typography weight="medium" color="default">{data.vendor ?? '-'}</Typography>
+            <Typography weight="medium" color="default">{data.customerName ?? '-'}</Typography>
           </div>
           <div className={styles.innerRow}>
             <Typography size="sm" color="muted">Payment Terms</Typography>

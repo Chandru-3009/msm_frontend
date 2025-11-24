@@ -8,13 +8,13 @@ import { useMemo, useState } from 'react'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
 
 const columns: ColumnDef<VendorRow>[] = [
-  { accessorKey: 'name', header: 'Vendor' },
-  { accessorKey: 'totalOrders', header: 'Total Orders',  cell: (c) => {
+  { accessorKey: 'vendor_name', header: 'Vendor' },
+  { accessorKey: 'total_orders', header: 'Total Orders',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
   {
-    accessorKey: 'totalQuantityLbs',
+    accessorKey: 'total_qty',
     header: 'Total Quantity',
     cell: (c) => {
       const v = c.getValue<number | undefined>()
@@ -22,7 +22,7 @@ const columns: ColumnDef<VendorRow>[] = [
     },
   },
   {
-    accessorKey: 'totalValueUsd',
+    accessorKey: 'total_value',
     header: 'Total Value',
     cell: (c) => {
       const v = c.getValue<number | undefined>()

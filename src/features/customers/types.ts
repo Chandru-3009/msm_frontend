@@ -1,33 +1,39 @@
 export type CustomerRow = {
   id: string
-  name: string
-  totalOrders: number
-  totalQuantityLbs: number
-  totalValueUsd: number
+  customer_name: string
+  total_orders: number
+  total_qty: number
+  total_value: number
 }
 
 export type CustomerOrderRow = {
   id: string
   date: string
-  salesOrder: string
+  sales_order: string
   items: number
-  orderValueLbs: number
-  status: 'Open' | 'Delivered' | 'Processing' | 'Cancelled'
+  order_value_lbs: number
+  status: string
 }
 
 export type OrderItemRow = {
   id: string
   partNumber: string
-  type: string
+  type?: string
   size: string
-  qtyLbs: number
-  pricePerLb: number
+  qtyLbs?: number
+  pricePerLb?: number
   subtotalUsd: number
-  lot: string
-  deliveryDate: string
+  lot?: string
+  deliveryDate?: string
+  grade?: string
+  ordered_qty_lbs?: number
+  received_qty_lbs?: number
+  unit_price_per_lb?: number
+  expected_ship_date?: string
 }
 
 export type OrderSummary = {
+  items: OrderItemRow[]
   orderId: string
   orderNumber: string
   status: string

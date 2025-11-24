@@ -7,71 +7,30 @@ import { VendorOrderRow, VendorRow } from './types'
 import { OrderItemRow, OrderSummary } from '@/features/customers/types'
 
 export async function fetchVendors(): Promise<VendorRow[]> {
-  if (USE_MOCKS || !API_URL) {
-    // Reuse customers mock to stand in for vendors
-    const list = (customersMock as any[]) ?? []
-    return list.map((c) => ({
-      id: c.id,
-      name: c.name,
-      totalOrders: c.totalOrders,
-      totalQuantityLbs: c.totalQuantityLbs,
-      totalValueUsd: c.totalValueUsd,
-    })) as VendorRow[]
-  }
+
   try {
-    const { data } = await ApiClient.get<VendorRow[]>('/vendors')
-    return Array.isArray(data) ? data : []
+    const { data } = await ApiClient.get<{ data: { vendors: VendorRow[] } }>('/vendors/list/')
+    return Array.isArray(data.data.vendors) ? data.data.vendors : []
   } catch {
-    const list = (customersMock as any[]) ?? []
-    return list.map((c) => ({
-      id: c.id,
-      name: c.name,
-      totalOrders: c.totalOrders,
-      totalQuantityLbs: c.totalQuantityLbs,
-      totalValueUsd: c.totalValueUsd,
-    })) as VendorRow[]
+    return []
   }
 }
 
 export async function fetchVendorOrders(vendorId: string): Promise<VendorOrderRow[]> {
-  if (USE_MOCKS || !API_URL) {
-    // Reuse customer orders mock and map fields
-    const list = (customerOrdersMock as any[]) ?? []
-    return list.map((o) => ({
-      id: o.id,
-      date: o.date,
-      poNumber: o.salesOrder,
-      items: o.items,
-      orderValueLbs: o.orderValueLbs,
-      status: o.status,
-    })) as VendorOrderRow[]
-  }
   try {
-    const { data } = await ApiClient.get<VendorOrderRow[]>(`/vendors/${vendorId}/orders`)
-    return Array.isArray(data) ? data : []
+    const { data } = await ApiClient.get<{ data: { purchases: VendorOrderRow[] } }>(`/vendors/purchase-history/${vendorId}/`)
+    return Array.isArray(data.data.purchases) ? data.data.purchases : []
   } catch {
-    const list = (customerOrdersMock as any[]) ?? []
-    return list.map((o) => ({
-      id: o.id,
-      date: o.date,
-      poNumber: o.salesOrder,
-      items: o.items,
-      orderValueLbs: o.orderValueLbs,
-      status: o.status,
-    })) as VendorOrderRow[]
+    return []
   }
 }
 
 export async function fetchVendorOrderItems(vendorId: string, orderId: string): Promise<{ summary: OrderSummary; items: OrderItemRow[] }> {
-  if (USE_MOCKS || !API_URL) {
-    return orderItemsMock as { summary: OrderSummary; items: OrderItemRow[] }
-  }
-  try {
-    const { data } = await ApiClient.get<{ summary: OrderSummary; items: OrderItemRow[] }>(`/vendors/${vendorId}/orders/${orderId}`)
-    if (data?.items && data?.summary) return data
-    throw new Error('Invalid order items response')
+    try {
+    const { data } = await ApiClient.get<{ summary: OrderSummary; items: OrderItemRow[] }>(`/orders/purchase-orders/${orderId}/`)
+    return data
   } catch {
-    return orderItemsMock as { summary: OrderSummary; items: OrderItemRow[] }
+    return { summary: { orderId: '', orderNumber: '', status: '', date: '', customerName: '', salesPerson: '', shipVia: '', paymentTerms: '', totalItems: 0, totalQuantityLbs: 0, totalValueUsd: 0, items: [] }, items: [] }
   }
 }
 

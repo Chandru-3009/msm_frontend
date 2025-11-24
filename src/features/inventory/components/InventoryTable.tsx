@@ -1,24 +1,32 @@
 import DataTable from '@/shared/components/DataTable/DataTable'
 import { ColumnDef } from '@tanstack/react-table'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { InventoryRow } from '../types'
-import { fetchInventory } from '../api'
-import { useMemo, useState } from 'react'
+import {
+  fetchInventory,
+  fetchInventoryFilterDaysUntilStockout,
+  fetchInventoryFilterProductTypes,
+  fetchInventoryFilterStatuses,
+  fetchInventoryFilterValueRanges,
+  fetchInventoryMetrics,
+} from '../api'
+import { useMemo } from 'react'
+import { useTableFilters, useFilterOptions, useFilterState, useTableKey } from '@/shared/hooks'
 import { useNavigate } from 'react-router-dom'
 import Filters, { FiltersValue, ValueRangeOption, DaysOption } from '@/shared/components/Filters/Filters'
 import StatusBadge from '@/shared/components/StatusBadge'
 import downloadIcon from '@/assets/icons/download_icon.svg'
 import StatCard from '@/shared/components/StatCard'
-import cartIcon from '@/assets/icons/cart_icon.svg'
-import clockIcon from '@/assets/icons/clock_icon.svg'
 import stockIcon from '@/assets/icons/stock_icon.svg'
 import PillSelect from '@/shared/components/PillSelect/PillSelect'
+import dollarIcon from '@/assets/icons/dollar_cion.svg'
 import Typography from '@/shared/components/Typography/Typography'
 import { inferStatusVariant, type Variant as StatusVariant } from '@/shared/components/StatusBadge/StatusBadge'
+import { formatCompactCurrency, formatCompactNumber } from '@/shared/utils/numberFormat'
 const columns: ColumnDef<InventoryRow>[] = [
-  { accessorKey: 'partNumber', header: 'Part Number' },
+  { accessorKey: 'part_number', header: 'Part Number' },
   { accessorKey: 'type', header: 'Type' },
-  { accessorKey: 'totalStock', header: 'Total Stock',  cell: (c) => {
+  { accessorKey: 'total_stock', header: 'Total Stock',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
@@ -30,19 +38,19 @@ const columns: ColumnDef<InventoryRow>[] = [
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
-  { accessorKey: 'onOrderLbs', header: 'On Order',  cell: (c) => {
+  { accessorKey: 'on_order', header: 'On Order',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `${v.toLocaleString()} lbs`
   } },
-  { accessorKey: 'unitPrice', header: 'Unit Price',  cell: (c) => {
+  { accessorKey: 'unit_price', header: 'Unit Price',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `$${v.toLocaleString()}`
   } },
-  { accessorKey: 'totalValue', header: 'Total Value',  cell: (c) => {
+  { accessorKey: 'total_value', header: 'Total Value',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : `$${v.toLocaleString()}`
   } },
-  { accessorKey: 'daysUntilStockout', header: 'Days Until Stockout',  cell: (c) => {
+  { accessorKey: 'days_until_stockout', header: 'Days Until Stockout',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     if (v == null) return '-'
     const statusText = (c.row.original as InventoryRow).status
@@ -58,55 +66,88 @@ const columns: ColumnDef<InventoryRow>[] = [
 ]
 
 export default function InventoryTable() {
-  const { data, isLoading } = useQuery({ queryKey: ['inventory'], queryFn: fetchInventory })
-  const rows = Array.isArray(data) ? data : []
   const navigate = useNavigate()
 
-  const typeOptions = useMemo(() => Array.from(new Set(rows.map((d) => d.type))).sort(), [rows])
-  const statuses = useMemo(() => Array.from(new Set(rows.map((d) => d.status))), [rows])
+  // Server-provided filters
+  const { data: statusesData } = useQuery({ queryKey: ['inventory-filter-statuses'], queryFn: fetchInventoryFilterStatuses })
+  const { data: productTypesData } = useQuery({ queryKey: ['inventory-filter-product-types'], queryFn: fetchInventoryFilterProductTypes })
+  const { data: valueRangesData } = useQuery({ queryKey: ['inventory-filter-value-ranges'], queryFn: fetchInventoryFilterValueRanges })
+  const { data: daysUntilData } = useQuery({ queryKey: ['inventory-filter-days-until'], queryFn: fetchInventoryFilterDaysUntilStockout })
 
-  const valueRanges: ValueRangeOption[] = useMemo(() => [
-    { key: 'lt100k', label: '$0–$100K', max: 100_000 },
-    { key: '100to500', label: '$100K–$500K', min: 100_000, max: 500_000 },
-    { key: '500to900', label: '$500K–$900K', min: 500_000, max: 900_000 },
-    { key: 'gt900', label: '$900K+', min: 900_000 },
-  ], [])
+  // ✅ Simplified filter option mapping using hooks
+  const { options: productTypeOptions, valueToId: productTypeNameToId } = useFilterOptions(productTypesData)
+  const { options: statuses, valueToId: statusNameToId } = useFilterOptions(statusesData)
 
-  const daysOptions: DaysOption[] = useMemo(() => [
-    { key: '7', label: '7 Days', days: 7 },
-    { key: '14', label: '14 Days', days: 14 },
-    { key: '30', label: '30 Days', days: 30 },
-    { key: '60', label: '60 Days', days: 60 },
-  ], [])
+  const valueRanges: ValueRangeOption[] = useMemo(() => (
+    (valueRangesData ?? []).map(v => ({ key: String(v.id), label: v.value }))
+  ), [valueRangesData])
 
-  const [filters, setFilters] = useState<FiltersValue>({ types: [] })
-  const [status, setStatus] = useState<string>('')
+  const daysOptions: DaysOption[] = useMemo(() => (
+    (daysUntilData ?? []).map(d => ({ key: String(d.id), label: d.value, days: 0 }))
+  ), [daysUntilData])
 
-  const filtered = useMemo(() => {
-    return rows.filter((r) => {
-      if (status && r.status !== status) return false
-      if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
-      if (filters.valueRangeKey) {
-        const opt = valueRanges.find((v) => v.key === filters.valueRangeKey)
-        if (opt) {
-          if (opt.min != null && r.totalValue < opt.min) return false
-          if (opt.max != null && r.totalValue > opt.max) return false
-        }
-      }
-      if (filters.daysKey) {
-        const opt = daysOptions.find((d) => d.key === filters.daysKey)
-        if (opt && !(r.daysUntilStockout <= opt.days)) return false
-      }
-      return true
-    })
-  }, [rows, status, filters, valueRanges, daysOptions])
+  // ✅ Use table filters hook for pagination and debounced search
+  const { pageIndex, pageSize, search, debouncedSearch, setPageIndex, setPageSize, setSearch, resetPage } = useTableFilters()
 
-  if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
+  // ✅ Use filter state hook with auto page reset
+  const [filters, setFilters] = useFilterState<FiltersValue>({ types: [] }, resetPage)
+  const [status, setStatus] = useFilterState<string>('', resetPage)
+
+  // Compute server params from UI selections
+  const productTypeIds = useMemo(
+    () => (filters.types ?? []).map(n => productTypeNameToId[n]).filter((v): v is number => typeof v === 'number'),
+    [filters.types, productTypeNameToId]
+  )
+  const valueRangeIds = useMemo(
+    () => (filters.valueRangeKey ? [Number(filters.valueRangeKey)] : []),
+    [filters.valueRangeKey]
+  )
+  const daysUntilIds = useMemo(
+    () => (filters.daysKey ? [Number(filters.daysKey)] : []),
+    [filters.daysKey]
+  )
+  const statusIds = useMemo(
+
+    () => (status ? [statusNameToId[status]].filter((v): v is number => typeof v === 'number') : []),
+    [status, statusNameToId]
+  )
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['inventory-dashboard', { search: debouncedSearch, productTypeIds, valueRangeIds, daysUntilIds, statusIds, pageIndex, pageSize }],
+    queryFn: () => fetchInventory({
+      search: debouncedSearch || undefined,
+      productTypeIds,
+      valueRangeIds,
+      daysUntilStockoutIds: daysUntilIds,
+      statusIds,
+      limit: pageSize,
+      offset: pageIndex * pageSize,
+    }),
+    placeholderData: keepPreviousData,
+  })
+  const { data: metricsData } = useQuery({
+    queryKey: ['inventory-metrics'],
+    queryFn: fetchInventoryMetrics,
+  })
+
+  // ✅ Simplified handlers - resetPage is now handled by useFilterState automatically
+
+  const rows = useMemo(() => data?.data?.items ?? [], [data])
+  const pageCount = data?.data?.pagination?.total_pages ?? 1
+  const totalRecords = data?.data?.pagination?.total ?? 0
+
+  // ✅ Use hook for table key generation (excludes search to prevent input reset)
+  const tableKey = useTableKey({
+    productTypeIds,
+    valueRangeIds,
+    daysUntilIds,
+    statusIds,
+  })
 
   const toolbarRight = (
     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
       <Filters
-        typeOptions={typeOptions}
+        typeOptions={productTypeOptions}
         valueRanges={valueRanges}
         daysOptions={daysOptions}
         value={filters}
@@ -126,44 +167,66 @@ export default function InventoryTable() {
     </div>
   )
 
+
+
   return (
     <>
    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 12 }}>
     <StatCard
-        title="Total Stock"
-        value={`lbs`}
+        title="Total Item"
+        value={formatCompactNumber(Number(metricsData?.data?.total_items))}
         iconSrc={stockIcon}
         type="stock"
-        linkText="All Products"
+        subtext="All Products"
       />
       <StatCard
-        title="Open customer Orders"
-        value={`lbs`}
-        iconSrc={cartIcon}
+        title="Total Value"
+        value={formatCompactCurrency(Number(metricsData?.data?.total_value))}
+        iconSrc={dollarIcon}
         type="customer"
-        metaDate="Oct 7, 2025"
+        subvalue={metricsData?.data?.total_value_change}
+        subtext="vs last month"
       />
      
       <StatCard
-        title="Stock out"
-        value={`0.9 mo`}
-        iconSrc={clockIcon}
+        title="Available Value"
+        value={formatCompactCurrency(Number(metricsData?.data?.available_value))}
+        iconSrc={dollarIcon}
         type="stockout"
+        subvalue={metricsData?.data?.available_value_change}
+        subtext="vs last month"
       />
 
       <StatCard
-        title="Open vendor Orders"
-        value={`lbs`}
-        iconSrc={cartIcon}
+        title="Allocated Value"
+        value={formatCompactCurrency(Number(metricsData?.data?.allocated_value))}
+        iconSrc={dollarIcon}
         type="vendor"
-        metaDate="Nov 28, 2025"
+        subvalue={metricsData?.data?.allocated_value_change}
+        subtext="vs last month"
       />
     </div>
     <div className="card" style={{ padding: 16 }}>
       <DataTable
-        data={filtered}
+        key={tableKey}
+        loading={isLoading}
+        totalRecords={totalRecords}
+        data={rows}
         columns={columns}
         toolbarRight={toolbarRight}
+        manualMode
+        pageCount={pageCount}
+        onChange={(state) => {
+          // Only update pageIndex if it's a pagination change (not search)
+          if (state.globalFilter === search) {
+            setPageIndex(state.pageIndex)
+          } else {
+            // Search changed, reset page and update search
+            resetPage()
+            setSearch(state.globalFilter ?? '')
+          }
+          setPageSize(state.pageSize)
+        }}
         onRowClick={(row) => navigate(`/inventory/${(row as InventoryRow).id}`)}
       />
     </div>

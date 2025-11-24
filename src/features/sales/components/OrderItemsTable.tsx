@@ -8,7 +8,7 @@ import OrderSummaryHeader from '@/features/customers/components/OrderSummary'
 
 const columns: ColumnDef<OrderItemRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
-  { accessorKey: 'type', header: 'Type' },
+  { accessorKey: 'type', header: 'grade' },
   { accessorKey: 'size', header: 'Size' },
   {
     accessorKey: 'qtyLbs',
@@ -38,7 +38,7 @@ const columns: ColumnDef<OrderItemRow>[] = [
     },
   },
   { accessorKey: 'lot', header: 'Lot #' },
-  { accessorKey: 'deliveryDate', header: 'Delivery Date' },
+  { accessorKey: 'expected_ship_date', header: 'Delivery Date' },
 ]
 
 export default function OrderItemsTable() {
@@ -55,11 +55,13 @@ export default function OrderItemsTable() {
   const items = data?.items ?? []
   const summary = data?.summary
 
+  console.log(summary)
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {summary && <OrderSummaryHeader data={summary} />}
       <div className="card" style={{ padding: 16 }}>
-        <DataTable enableGlobalFilter={false} data={items} columns={columns} />
+        <DataTable enablePagination={false} enableGlobalFilter={false} data={items} columns={columns} />
       </div>
     </div>
   )

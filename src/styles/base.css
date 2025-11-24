@@ -5,7 +5,6 @@
 * { box-sizing: border-box; }
 html, body, #root { 
   height: 100vh;
-  overflow: hidden;
  }
 body {
   margin: 0;

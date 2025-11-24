@@ -2,7 +2,7 @@ export type InventoryDetail = {
   id: string
   partNumber: string
   type: string
-  status: 'Critical' | 'Low' | 'Optimal'
+  status: 'Critical' | 'Low' | 'Optimal' | 'Excess'
   metrics: {
     totalStock: number
     available: number

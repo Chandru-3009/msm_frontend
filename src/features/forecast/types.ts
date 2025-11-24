@@ -1,14 +1,14 @@
 export type ForecastRow = {
-  id: string
-  partNumber: string
+  id: number
+  part_number: string
   type: string
   size: string
   stock: number
   available: number
-  forecastLbs: number
-  nextReorder: string
-  daysUntilStockout: number
-  status: 'Critical' | 'Low' | 'Optimal'
+  forecast_30_days: string
+  next_reorder: string
+  days_until_stockout: number
+  status: string
 }
 
 

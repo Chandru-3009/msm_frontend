@@ -1,20 +1,20 @@
 import DataTable from '@/shared/components/DataTable/DataTable'
 import { ColumnDef } from '@tanstack/react-table'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { CustomerRow } from '../types'
 import { fetchCustomers } from '../api'
 import { useNavigate } from 'react-router-dom'
-import PillSelect from '@/shared/components/PillSelect/PillSelect'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useTableFilters, useTableKey } from '@/shared/hooks'
 
 const columns: ColumnDef<CustomerRow>[] = [
-  { accessorKey: 'name', header: 'Customer' },
-  { accessorKey: 'totalOrders', header: 'Total Orders',  cell: (c) => {
+  { accessorKey: 'customer_name', header: 'Customer' },
+  { accessorKey: 'total_orders', header: 'Total Orders',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
   {
-    accessorKey: 'totalQuantityLbs',
+    accessorKey: 'total_qty',
     header: 'Total Quantity',
     cell: (c) => {
       const v = c.getValue<number | undefined>()
@@ -22,7 +22,7 @@ const columns: ColumnDef<CustomerRow>[] = [
     },
   },
   {
-    accessorKey: 'totalValueUsd',
+    accessorKey: 'total_value',
     header: 'Total Value',
     cell: (c) => {
       const v = c.getValue<number | undefined>()
@@ -33,34 +33,58 @@ const columns: ColumnDef<CustomerRow>[] = [
 ]
 
 export default function CustomersTable() {
-  const { data, isLoading, isError, error } = useQuery({ queryKey: ['customers'], queryFn: fetchCustomers })
-  const [customerType, setCustomerType] = useState<string>('')
-  const rows = Array.isArray(data) ? data : []
-  const customerTypes = useMemo(() => Array.from(new Set(rows.map((d) => d.name))).sort(), [rows])
   const navigate = useNavigate()
 
-  if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
-  if (isError) return <div className="card" style={{ padding: 16, color: 'crimson' }}>Failed to load customers{(error as any)?.message ? `: ${(error as any).message}` : ''}</div>
+  // ✅ Use table filters hook for pagination and debounced search
+  const { pageIndex, pageSize, search, debouncedSearch, setPageIndex, setPageSize, setSearch, resetPage } = useTableFilters()
 
-  const toolbarRight = (
-    <div style={{ display: 'flex', gap: 8 }}>
-      <PillSelect
-        value={customerType}
-        onChange={setCustomerType}
-        options={customerTypes.map((c) => ({ value: c, label: c }))}
-        placeholder="All Customers"
-        allOptionLabel="All Customers"
-        ariaLabel="Filter by customer"
-      />
-    </div>
-  )
+  const { data, isLoading } = useQuery({
+    queryKey: ['customers', { search: debouncedSearch, pageIndex, pageSize }],
+    queryFn: () => fetchCustomers({
+      search: debouncedSearch || undefined,
+      limit: pageSize,
+      offset: pageIndex * pageSize,
+    }),
+    placeholderData: keepPreviousData,
+  })
+
+  // Debug: Log the API response
+
+
+  const rows = useMemo(() => data?.data?.customers ?? [], [data])
+  const pageCount = data?.data?.pagination?.total_pages ?? 1
+  const totalRecords = data?.data?.pagination?.total ?? 0
+
+  // Debug: Log extracted data
+  console.log('Rows:', rows.length, 'Page Count:', pageCount, 'Total Records:', totalRecords)
+
+  // ✅ Use hook for table key generation
+  const tableKey = useTableKey({
+    // Add filter params here if you add filters later
+  })
 
   return (
     <div className="card" style={{ padding: 16 }}>
       <DataTable
-        toolbarRight={toolbarRight}
+        key={tableKey}
+        loading={isLoading}
+        totalRecords={totalRecords}
         data={rows}
         columns={columns}
+        searchPlaceholder="Search customers..."
+        manualMode
+        pageCount={pageCount}
+        onChange={(state) => {
+          // Only update pageIndex if it's a pagination change (not search)
+          if (state.globalFilter === search) {
+            setPageIndex(state.pageIndex)
+          } else {
+            // Search changed, reset page and update search
+            resetPage()
+            setSearch(state.globalFilter ?? '')
+          }
+          setPageSize(state.pageSize)
+        }}
         onRowClick={(row) => navigate(`/customers/${(row as CustomerRow).id}`)}
       />
     </div>

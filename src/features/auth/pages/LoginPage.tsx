@@ -17,11 +17,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | undefined>()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true })
-    }
-  }, [isAuthenticated, navigate])
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate('/dashboard', { replace: true })
+  //   }
+  // }, [isAuthenticated, navigate])
 
   async function handleMicrosoftLogin() {
     if (busy) return

@@ -4,42 +4,30 @@
   box-shadow: 0px 4px 15px 0px #00000012;
   padding: 16px;
 }
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
 }
+
 .title {
   font-weight: 600;
   color: #111827;
+  font-size: 14px;
 }
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn {
-  height: 28px;
-  padding: 0 8px;
-  border: 1px solid #E5E7EB;
-  background: #fff;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-}
-.btn[aria-pressed="true"] {
-  background: #EEF2FF;
-  border-color: #E5E7EB;
-}
+
 .chartWrap {
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 280px;
 }
+
 .tooltip {
   position: absolute;
   transform: translate(-50%, -100%);
+  margin-bottom: 10px;
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: 8px;
@@ -49,30 +37,27 @@
   color: #111827;
   pointer-events: none;
   white-space: nowrap;
-}
-.muted {
-  color: #6b7280;
-}
-.legend {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #F3F4F6;
-}
-.legendItem {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: #6B7280;
-}
-.legendColor {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-  margin-right: 8px;
+  z-index: 10;
 }
 
+.summaryStats {
+  display: flex;
+  gap: 32px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #F3F4F6;
+  justify-content: flex-start;
+}
+
+.summaryLabel {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+.summaryValue {
+  font-size: 16px;
+  font-weight: 600;
+}
 

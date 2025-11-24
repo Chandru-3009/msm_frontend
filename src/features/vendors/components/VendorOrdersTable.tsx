@@ -12,13 +12,13 @@ import Filters from '@/shared/components/Filters/Filters'
 
 const columns: ColumnDef<VendorOrderRow>[] = [
   { accessorKey: 'date', header: 'Date' },
-  { accessorKey: 'poNumber', header: 'PO Number' },
-  { accessorKey: 'items', header: 'Items',  cell: (c) => {
+  { accessorKey: 'purchase_order', header: 'PO Number' },
+  { accessorKey: 'items_count', header: 'Items',  cell: (c) => {
     const v = c.getValue<number | undefined>()
     return v == null ? '-' : v.toLocaleString()
   } },
   {
-    accessorKey: 'orderValueLbs',
+    accessorKey: 'order_value_display',
     header: 'Order Value',  
     cell: (c) => {
       const v = c.getValue<number | undefined>()

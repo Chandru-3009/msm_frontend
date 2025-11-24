@@ -3,67 +3,57 @@ import { ColumnDef } from '@tanstack/react-table'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { OrderItemRow } from '../types'
-import { fetchOrderItems } from '../api'
+import { fetchPurchaseOrderItems } from '@/features/purchase/api'
 import OrderSummaryHeader from './OrderSummary'
-import PillSelect from '@/shared/components/PillSelect/PillSelect'
-import Filters from '@/shared/components/Filters/Filters'
-import { useState } from 'react'
-import { useMemo } from 'react'
 
 const columns: ColumnDef<OrderItemRow>[] = [
   { accessorKey: 'partNumber', header: 'Part Number' },
-  { accessorKey: 'type', header: 'Type' },
+  { accessorKey: 'grade', header: 'Grade' },
   { accessorKey: 'size', header: 'Size' },
-  {
-    accessorKey: 'qtyLbs',
-    header: 'Qty',
-    cell: (c) => {
-      const v = c.getValue<number | undefined>()
-      return v == null ? '-' : `${v.toLocaleString()} lbs`
-    },
-  },
-  {
-    accessorKey: 'pricePerLb',
-    header: 'Price/lb',
-    cell: (c) => {
-      const v = c.getValue<number | undefined>()
-      return v == null ? '-' : `$${v.toLocaleString()}`
-    },
-  },
+  { accessorKey: 'ordered_qty_lbs', header: 'Ordered', meta: { align: 'right' as const }, cell: (c) => {
+    const v = c.getValue<number | undefined>()
+    return v == null ? '-' : `${v.toLocaleString()} lbs`
+  } },
+  
+  { accessorKey: 'received_qty_lbs', header: 'Received', meta: { align: 'right' as const }, cell: (c) => {
+    const v = c.getValue<number | undefined>()
+    return v == null ? '-' : `${v.toLocaleString()} lbs`
+  } },
+  { accessorKey: 'unit_price_per_lb', header: 'Price/lb', meta: { align: 'right' as const }, cell: (c) => {
+    const v = c.getValue<number | undefined>()
+    return v == null ? '-' : `$${v.toLocaleString()}`
+  } },
   {
     accessorKey: 'subtotalUsd',
     header: 'Subtotal',
+    meta: { align: 'right' as const },
     cell: (c) => {
       const v = c.getValue<number | undefined>()
       return v == null ? '-' : `$${v.toLocaleString()}`
     },
   },
-  { accessorKey: 'lot', header: 'Lot #' },
-  { accessorKey: 'deliveryDate', header: 'Delivery Date' },
+  { accessorKey: 'expected_ship_date', header: 'Expected Ship Date' },
 ]
 
 export default function OrderItemsTable() {
-  const { id, orderId } = useParams()
+  const { orderId } = useParams()
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['order-items', id, orderId],
-    queryFn: () => fetchOrderItems(id ?? '', orderId ?? ''),
-    enabled: !!id && !!orderId,
+    queryKey: ['purchase-order-items', orderId],
+    queryFn: () => fetchPurchaseOrderItems(orderId ?? ''),
+    enabled: !!orderId,
   })
-
- 
 
   if (isLoading) return <div className="card" style={{ padding: 16 }}>Loading…</div>
   if (isError) return <div className="card" style={{ padding: 16, color: 'crimson' }}>Failed to load order{(error as any)?.message ? `: ${(error as any).message}` : ''}</div>
 
   const items = data?.items ?? []
   const summary = data?.summary
- 
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {summary && <OrderSummaryHeader data={summary} />}
       <div className="card" style={{ padding: 16 }}>
-        <DataTable enableGlobalFilter={false} data={items} columns={columns} />
+        <DataTable enablePagination={false} enableGlobalFilter={false} data={items} columns={columns} />
       </div>
     </div>
   )

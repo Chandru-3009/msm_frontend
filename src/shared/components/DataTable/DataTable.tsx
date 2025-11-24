@@ -18,13 +18,16 @@ type Props<T extends object> = import('./types').TableProps<T>
 export default function DataTable<T extends object>({
   data,
   columns,
+  loading = false,
   initialPageSize = 10,
   pageSizeOptions = [10, 25, 50],
   enableGlobalFilter = true,
   searchPlaceholder,
   toolbarRight,
   manualMode = false,
+  enablePagination = true,
   pageCount,
+  totalRecords,
   onChange,
   onRowClick,
 }: Props<T>) {
@@ -53,7 +56,7 @@ export default function DataTable<T extends object>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    ...(enablePagination ? { getPaginationRowModel: getPaginationRowModel() } : {}),
   })
 
   useMemo(() => {
@@ -67,7 +70,7 @@ export default function DataTable<T extends object>({
       {(enableGlobalFilter || toolbarRight) && (
         <div className="toolbar-row">
           <div style={{ display: 'flex',justifyContent: 'space-between', width: '100%',alignItems: 'center'}}>
-          <div>total</div>
+          <div>total {totalRecords}</div>
                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             {enableGlobalFilter && <SearchInput value={globalFilter ?? ''} onChange={(v) => setGlobalFilter(v)} placeholder={searchPlaceholder} />}
           
@@ -130,18 +133,23 @@ export default function DataTable<T extends object>({
                 ))}
               </tr>
             ))}
-            {table.getRowModel().rows.length === 0 && (
+            {loading && table.getRowModel().rows.length === 0 && (
+              <tr><td colSpan={table.getAllLeafColumns().length} className="small" style={{ padding: 16 }}>Loading…</td></tr>
+            )}
+            {!loading && table.getRowModel().rows.length === 0 && (
               <tr><td colSpan={table.getAllLeafColumns().length} className="small" style={{ padding: 16 }}>No data</td></tr>
             )}
           </tbody>
         </table>
       </div>
 
-      <Pagination
+      {enablePagination && (
+        <Pagination
         page={pageIndex}
         pageCount={pageCountComputed}
-        onPageChange={(p) => table.setPageIndex(p)}
-      />
+          onPageChange={(p) => table.setPageIndex(p)}
+        />
+      )}
     </div>
   )
 }

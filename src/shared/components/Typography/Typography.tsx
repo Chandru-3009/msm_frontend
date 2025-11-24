@@ -4,7 +4,7 @@ import styles from './Typography.module.css'
 
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
 type Weight = 'regular' | 'medium' | 'semibold' | 'bold'
-type ColorToken = 'default' | 'muted' | 'primary' | 'danger' | 'heading' | 'subtitle' | 'secondary' | 'success'
+type ColorToken = 'default' | 'muted' | 'primary' | 'danger' | 'heading' | 'subtitle' | 'secondary' | 'success'| 'subvalue' | 'blue'
 
 type Props<TTag extends keyof JSX.IntrinsicElements = 'span'> = {
   as?: TTag
@@ -45,6 +45,8 @@ const colorClass: Record<ColorToken, string> = {
   subtitle: styles.cSubtitle,
   secondary: styles.cSecondary,
   success: styles.cSuccess,
+  subvalue: styles.cSubvalue,
+  blue: styles.cBlue
 }
 
 const alignClass = {

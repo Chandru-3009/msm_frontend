@@ -35,10 +35,13 @@
  }
 
   .subtext {
-    display: block;
-    font-family: var(--font);
-    font-size: 12px;
-    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .subtext img {
+    padding-left: 8px;
   }
 
   .muted {

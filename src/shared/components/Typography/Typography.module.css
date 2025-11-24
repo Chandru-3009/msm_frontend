@@ -27,7 +27,8 @@
 .cSubtitle { color: #62748E; }  /* as requested for subtitle */
 .cSecondary { color: #45556C; }
 .cSuccess { color: #197E48; }   /* matches StatusBadge success color */
-
+.cSubvalue { color : #535862}
+.cBlue { color: var(--primary); }
 /* align */
 .aLeft { text-align: left; }
 .aCenter { text-align: center; display: block; }

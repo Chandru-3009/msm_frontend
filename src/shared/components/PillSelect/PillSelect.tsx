@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 type Option = { value: string; label: string }
 
@@ -11,6 +11,9 @@ type Props = {
   className?: string
   style?: React.CSSProperties
   ariaLabel?: string
+  // Infinite scroll props
+  onScrollBottom?: () => void
+  loading?: boolean
 }
 
 export default function PillSelect({
@@ -22,8 +25,12 @@ export default function PillSelect({
   className,
   style,
   ariaLabel,
+  onScrollBottom,
+  loading = false,
 }: Props) {
   const [open, setOpen] = useState(false)
+  const selectingRef = useRef(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
   const label =
     (value ? (options.find((o) => o.value === value)?.label ?? value) : '') ||
     placeholder ||
@@ -31,11 +38,32 @@ export default function PillSelect({
 
   const withAll: Option[] = allOptionLabel != null ? [{ value: '', label: allOptionLabel }, ...options] : options
 
+  // Infinite scroll detection
+  useEffect(() => {
+    const dropdown = dropdownRef.current
+    if (!dropdown || !onScrollBottom) return
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = dropdown
+      // Trigger when scrolled within 50px of bottom
+      if (scrollHeight - scrollTop - clientHeight < 50) {
+        onScrollBottom()
+      }
+    }
+
+    dropdown.addEventListener('scroll', handleScroll)
+    return () => dropdown.removeEventListener('scroll', handleScroll)
+  }, [onScrollBottom])
+
   return (
     <div
       style={{ position: 'relative', ...style }}
       className={className}
       onBlur={(e) => {
+        if (selectingRef.current) {
+          selectingRef.current = false
+          return
+        }
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false)
       }}
     >
@@ -61,14 +89,23 @@ export default function PillSelect({
         </svg>
       </div>
       {open && (
-        <div className="dropdown" role="listbox">
+        <div 
+          ref={dropdownRef}
+          className="dropdown" 
+          role="listbox"
+          style={{ maxHeight: '300px', overflowY: 'auto' }}
+        >
           {withAll.map((opt) => (
             <div
               key={opt.value + '|' + opt.label}
               className="dropdown-item"
               role="option"
               aria-selected={value === opt.value}
-              onClick={() => {
+              tabIndex={0}
+              onMouseDown={(e) => {
+                // Ensure selection fires before blur closes the dropdown
+                e.preventDefault()
+                selectingRef.current = true
                 onChange(opt.value)
                 setOpen(false)
               }}
@@ -76,6 +113,11 @@ export default function PillSelect({
               {opt.label}
             </div>
           ))}
+          {loading && (
+            <div className="dropdown-item" style={{ textAlign: 'center', color: '#888', fontStyle: 'italic' }}>
+              Loading more...
+            </div>
+          )}
         </div>
       )}
     </div>

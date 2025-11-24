@@ -1,5 +1,8 @@
 
 import styles from './StatCard.module.css'
+import tradeUpIcon from '@/assets/icons/appreciation_arrown_icon.svg'
+import tradeDownIcon from '@/assets/icons/depreciation_arrow_icon.svg'
+import Typography from '../Typography'
 
 type StatCardType = 'stock' | 'customer' | 'vendor' | 'stockout' | 'reorder'
 
@@ -13,6 +16,8 @@ type StatCardProps = {
   linkText?: string
   metaDate?: string
   quantity?: string
+  subtext?: string
+  subvalue?: string
 }
 
 export default function StatCard({
@@ -25,35 +30,20 @@ export default function StatCard({
   linkText,
   metaDate,
   quantity,
+  subtext,
+  subvalue,
 }: StatCardProps) {
   const cn = `${styles.container}${className ? ` ${className}` : ''}`
-
+console.log(subvalue)
   const renderSubtext = () => {
-    switch (type) {
-      case 'stock':
-        return <span className={`${styles.subtext} ${styles.link}`}>{linkText || 'All Products'}</span>
-      case 'customer':
-      case 'vendor':
-        return (
-          <span className={`${styles.subtext} ${styles.muted}`}>
-            Last Order: <span className={styles.link}>{metaDate || '—'}</span>
-          </span>
-        )
-      case 'stockout':
-        return (
-          <span className={styles.subtext}>
-            <span className={styles.danger}>Excl.</span> <span className={styles.muted}>Incoming POs</span>
-          </span>
-        )
-      case 'reorder':
-        return (
-          <span className={`${styles.subtext} ${styles.muted}`}>
-            Quantity: <span className={styles.link}>{quantity || '—'}</span>
-          </span>
-        )
-      default:
-        return null
-    }
+
+    return <div className={styles.subtext}>
+      {subvalue    && subtext && <img src={subvalue?.toString().includes('-') ? tradeDownIcon : tradeUpIcon} alt="" />}
+     {subvalue && subtext && <Typography size="sm" color={subvalue?.toString().includes('-') ? 'danger' : 'success'}>{`${subvalue?.toString().replace('-','')}%`}</Typography>}
+      {subtext && <Typography size="xs" weight="medium" color={type === 'stock' ? 'blue' : 'subvalue'}>{subtext?.replace('-', '') ?? ''}</Typography>}
+    </div>
+
+  
   }
 
   return (
@@ -62,7 +52,7 @@ export default function StatCard({
         <div className={styles.title}>{title}</div>
         {iconSrc && <img className={styles.icon} src={iconSrc} alt="" />}
       </div>
-      <div className={styles.value}>{value}</div>
+      <Typography size="xl"  >{value}</Typography>
       {renderSubtext()}
     </div>
   )

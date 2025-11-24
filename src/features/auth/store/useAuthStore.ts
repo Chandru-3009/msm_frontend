@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ApiClient } from '@/shared/api/http'
+import { ApiMsmClient } from '@/shared/api/http'
 import { pca, loginRequest } from '@/features/auth/msal/msal'
 
 type AuthState = {
@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   // Temporary credential login using backend API (until MSAL is ready)
   async signInWithCredentials(username: string, password: string) {
     try {
-      const resp = await ApiClient.post('/auth/login/', { username, password })
+      const resp = await ApiMsmClient.post('/auth/login/', { username, password })
       // Try common token field names
       const token = resp.data.data.tokens.access
      

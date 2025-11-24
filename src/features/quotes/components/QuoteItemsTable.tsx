@@ -42,7 +42,7 @@ export default function QuoteItemsTable() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {summary && <OrderSummaryHeader data={summary} showRow2={false} />}
       <div className="card" style={{ padding: 16 }}>
-        <DataTable enableGlobalFilter={false} data={items} columns={columns} />
+        <DataTable enablePagination={false} enableGlobalFilter={false} data={items} columns={columns} />
       </div>
     </div>
   )

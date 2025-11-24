@@ -1,0 +1,281 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #E5E7EB;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.trigger:hover {
+  background: #F9FAFB;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  min-width: 520px;
+  width: max-content;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 156px 1fr;
+  gap: 0;
+  padding: 20px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+/* Presets Section */
+.presets {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 20px;
+  border-right: 1px solid #F3F4F6;
+}
+
+.presetBtn {
+  padding: 10px 12px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #4B5563;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.presetBtn:hover {
+  background: #F9FAFB;
+  color: #111827;
+}
+
+.presetActive {
+  background: #F3F4F6 !important;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* Calendar Section */
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 20px;
+}
+
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+
+.monthYear {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.navBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  color: #9CA3AF;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.navBtn:hover {
+  background: #F9FAFB;
+  color: #111827;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9CA3AF;
+  padding: 8px 0;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #111827;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  font-weight: 400;
+}
+
+.day:hover:not(.otherMonth):not(.selected) {
+  background: #F9FAFB;
+}
+
+.otherMonth {
+  color: #E5E7EB;
+}
+
+.today {
+  font-weight: 600;
+  color: #2563EB;
+  background: #EFF6FF;
+  border-radius: 50%;
+}
+
+.today:hover {
+  background: #DBEAFE !important;
+}
+
+.selected {
+  background: #2563EB !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 50% !important;
+}
+
+.selected:hover {
+  background: #1D4ED8 !important;
+}
+
+.inRange {
+  background: #EFF6FF;
+  color: #2563EB;
+  border-radius: 0 !important;
+}
+
+.inRange.selected {
+  border-radius: 50% !important;
+}
+
+/* Footer Section */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  gap: 16px;
+  background: #FFFFFF;
+  border-radius: 0 0 12px 12px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.dateInputs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.dateInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  transition: all 0.15s ease;
+  min-width: 120px;
+}
+
+.dateInput:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.dateInput::placeholder {
+  color: #D1D5DB;
+}
+
+.separator {
+  color: #9CA3AF;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancelBtn,
+.applyBtn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.cancelBtn {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+}
+
+.cancelBtn:hover {
+  background: #F9FAFB;
+  border-color: #D1D5DB;
+}
+
+.applyBtn {
+  background: #1E40AF;
+  border: 1px solid #1E40AF;
+  color: #fff;
+}
+
+.applyBtn:hover {
+  background: #1E3A8A;
+  border-color: #1E3A8A;
+}
+

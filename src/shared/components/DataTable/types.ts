@@ -21,6 +21,7 @@ export type ToolbarConfig = {
 export type TableProps<T extends object> = {
   data: T[]
   columns: ColumnDef<T, any>[]
+  loading?: boolean
   initialPageSize?: number
   pageSizeOptions?: number[]
   enableGlobalFilter?: boolean
@@ -29,6 +30,8 @@ export type TableProps<T extends object> = {
   toolbar?: ToolbarConfig
   manualMode?: boolean
   pageCount?: number
+  totalRecords?: number
+  enablePagination?: boolean
   onChange?: (s: TableChange) => void
   onRowClick?: (row: T) => void
 

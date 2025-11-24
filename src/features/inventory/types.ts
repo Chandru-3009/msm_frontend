@@ -9,7 +9,7 @@ export type InventoryRow = {
   unitPrice: number
   totalValue: number
   daysUntilStockout: number
-  status: 'Critical' | 'Low' | 'Optimal'
+  status: 'Critical' | 'Low' | 'Optimal' | 'Excess'
 }
 
 
